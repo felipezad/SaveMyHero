@@ -15,6 +15,7 @@ object NetworkModule {
     @JvmStatic
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
+            .baseUrl("https://gateway.marvel.com:443/v1/public/")
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)
             .build()
@@ -37,8 +38,7 @@ object NetworkModule {
             val urlBuilder = request.url().newBuilder()
 
             val newUrl = urlBuilder
-                .addQueryParameter("app_id", "foo")
-                .addQueryParameter("app_key", "boo")
+                .addQueryParameter("apikey", "boo")
                 .build()
 
             val newRequest = request.buildNewUrl(newUrl)
