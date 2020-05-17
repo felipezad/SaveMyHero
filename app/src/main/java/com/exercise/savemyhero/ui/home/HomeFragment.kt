@@ -37,5 +37,7 @@ class HomeFragment : DaggerFragment() {
         homeViewModel.text.observe(viewLifecycleOwner, Observer { t ->
             text_home.text = t
         })
+
+        homeViewModel.getListOfHeroes()
     }
 }
