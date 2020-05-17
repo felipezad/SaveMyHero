@@ -1,4 +1,4 @@
-package com.exercise.savemyhero.data
+package com.exercise.savemyhero.data.remote
 
 import com.exercise.savemyhero.data.remote.model.HeroResponse
 import retrofit2.http.GET
