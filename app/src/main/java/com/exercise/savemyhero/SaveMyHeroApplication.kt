@@ -1,4 +1,4 @@
-package com.exercise.savemyhero.ui
+package com.exercise.savemyhero
 
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication

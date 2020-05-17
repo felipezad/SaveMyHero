@@ -3,7 +3,7 @@
     package="com.exercise.savemyhero">
 
     <application
-        android:name=".ui.SaveMyHeroApplication"
+        android:name=".SaveMyHeroApplication"
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
