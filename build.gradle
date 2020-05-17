@@ -96,12 +96,6 @@ buildscript {
                 "androidx.lifecycle:lifecycle-compiler:$lifecycle_version",
                 "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
         ]
-
-        librariesAnnotationProccessor = [
-                "com.google.dagger:dagger-compiler:$dagger_version",
-                "com.google.dagger:dagger-android-processor:$dagger_version"
-        ]
-
         testLibraries = [
                 "junit:junit:$junit_version",
                 // Coroutines testing
