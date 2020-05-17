@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.exercise.savemyhero.R
-import com.exercise.savemyhero.ui.core.SaveMyHeroViewModelFactory
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
@@ -15,7 +14,7 @@ import javax.inject.Inject
 class HomeFragment : DaggerFragment() {
 
     @Inject
-    lateinit var homeViewModelFactory: SaveMyHeroViewModelFactory
+    lateinit var homeViewModelFactory: HomeViewModel.Factory
 
     private val homeViewModel: HomeViewModel by viewModels {
         homeViewModelFactory
