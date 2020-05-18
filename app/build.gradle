@@ -62,6 +62,7 @@ dependencies {
     implementation libraries
     implementation arch_libraries
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    debugImplementation debugLibraries
     kapt librariesKapt
 
     testImplementation testLibraries
