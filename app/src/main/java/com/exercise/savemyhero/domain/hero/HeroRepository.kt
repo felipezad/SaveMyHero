@@ -16,7 +16,8 @@ class HeroRepository @Inject constructor(
     fun getHeroes(numberOfHeroes: Int): Flow<List<Hero>> {
         return flow {
             val latestHeroes = marvelService.requestHeroes(limit = numberOfHeroes)
-            emit(heroMapper.to(latestHeroes))
+            val value = heroMapper.to(from = latestHeroes.data.results)
+            emit(value)
         }.flowOn(Dispatchers.IO)
     }
 }
