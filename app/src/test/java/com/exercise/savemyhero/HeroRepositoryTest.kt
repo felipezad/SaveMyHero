@@ -10,6 +10,7 @@ import com.exercise.savemyhero.domain.hero.HeroRepository
 import com.exercise.savemyhero.ui.core.ApiResult
 import com.exercise.savemyhero.ui.core.Failure
 import com.exercise.savemyhero.ui.core.Loading
+import com.exercise.savemyhero.ui.core.Success
 import com.squareup.moshi.Moshi
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -31,7 +32,6 @@ import java.io.IOException
 class HeroRepositoryTest {
 
     private val testDispatcher = TestCoroutineDispatcher()
-
 
     @MockK
     lateinit var marvelService: MarvelService
@@ -74,11 +74,17 @@ class HeroRepositoryTest {
                 coEvery { marvelService.requestHeroes(limit = 1) } returns it
                 coEvery { heroMapper.to(from = it.data.results) } returns listOfHeroes
 
-                heroRepository.getHeroes(1).collect { }
+                heroRepository.getHeroes(1).collect { states ->
+                    response.add(states)
+                }
                 advanceTimeBy(1_000)
                 coVerify(exactly = 1) {
                     marvelService.requestHeroes(limit = 1)
                     heroMapper.to(from = it.data.results)
+                    assertEquals(3, response.size)
+                    assert(response[0] is Loading)
+                    assert(response[1] is Success)
+                    assert(response[2] is Loading)
                 }
             }
         }
