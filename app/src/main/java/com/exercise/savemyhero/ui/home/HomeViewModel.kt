@@ -29,7 +29,8 @@ class HomeViewModel @Inject constructor(
                 _text.value = "Failure ${result.failure.toString()}"
             }
             is Loading -> {
-                _text.value = "Loading ...."
+                if (result.isLoading)
+                    _text.value = "Loading ...."
             }
         }
     }

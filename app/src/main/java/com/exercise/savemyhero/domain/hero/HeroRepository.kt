@@ -2,10 +2,13 @@ package com.exercise.savemyhero.domain.hero
 
 import com.exercise.savemyhero.data.remote.MarvelService
 import com.exercise.savemyhero.domain.Repository
+import com.exercise.savemyhero.extensions.prepareLoadingStates
 import com.exercise.savemyhero.ui.core.ApiResult
 import com.exercise.savemyhero.ui.core.Success
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class HeroRepository @Inject constructor(
@@ -19,5 +22,7 @@ class HeroRepository @Inject constructor(
             val value = heroMapper.to(from = latestHeroes.data.results)
             emit(Success(value))
         }
+            .prepareLoadingStates()
+            .flowOn(Dispatchers.IO)
     }
 }
