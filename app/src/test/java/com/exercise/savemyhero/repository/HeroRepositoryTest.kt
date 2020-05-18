@@ -1,4 +1,4 @@
-package com.exercise.savemyhero
+package com.exercise.savemyhero.repository
 
 import com.exercise.savemyhero.data.remote.MarvelService
 import com.exercise.savemyhero.data.remote.model.ApiResponse
@@ -42,8 +42,8 @@ class HeroRepositoryTest {
     lateinit var heroRepository: HeroRepository
 
 
-    private val heroOne = Hero("hero1", "no thumb1")
-    private val heroTwo = Hero("hero2", "no thumb2")
+    private val heroOne = Hero(1, "hero1", "no thumb1")
+    private val heroTwo = Hero(2, "hero2", "no thumb2")
     private val listOfHeroes = listOf(heroOne, heroTwo)
     private var heroMock: ApiResponse<HeroResponse>? = null
     private val moshi = Moshi.Builder().build()

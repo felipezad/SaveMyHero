@@ -114,7 +114,10 @@ buildscript {
                 "com.google.truth:truth:$truth_version",
 
                 // alternatively - without Android dependencies for testing
-                "androidx.paging:paging-common:$paging_version"
+                "androidx.paging:paging-common:$paging_version",
+
+                // mockweb server
+                "com.squareup.okhttp3:mockwebserver:4.4.0"
         ]
 
         androidTestLibraries = [

@@ -1,4 +1,4 @@
-package com.exercise.savemyhero
+package com.exercise.savemyhero.repository
 
 const val HERO_RESPONSE_JSON_STRING = """
 {
