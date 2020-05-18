@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.exercise.savemyhero">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:name=".SaveMyHeroApplication"
         android:allowBackup="false"
