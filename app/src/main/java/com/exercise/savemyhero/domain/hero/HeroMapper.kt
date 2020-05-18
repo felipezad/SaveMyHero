@@ -8,8 +8,10 @@ class HeroMapper @Inject constructor() : Mapper<HeroResponse, Hero> {
     override fun to(from: HeroResponse): Hero {
         return from.run {
             Hero(
-                name = this.name,
-                thumbnail = "thumbanil"
+                id = id,
+                name = name,
+                thumbnail = thumbnail.path + "." + thumbnail.extension,
+                description = description
             )
         }
     }

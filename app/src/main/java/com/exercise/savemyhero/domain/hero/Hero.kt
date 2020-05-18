@@ -6,7 +6,6 @@ import com.exercise.savemyhero.domain.hero.Hero.Companion.TABLE_NAME
 
 @Entity(tableName = TABLE_NAME)
 data class Hero(
-
     @PrimaryKey
     var id: Int? = 0,
     var name: String = "",
