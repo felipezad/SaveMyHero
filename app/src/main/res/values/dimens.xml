@@ -2,9 +2,15 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!--  region  Dimension pattern material-->
     <dimen name="dimen_1">1dp</dimen>
     <dimen name="dimen_4">4dp</dimen>
     <dimen name="dimen_8">8dp</dimen>
     <dimen name="dimen_16">16dp</dimen>
+    <!-- endregion -->
 
+    <!-- region Thumbnail -->
+    <dimen name="max_size_thumbnail">100dp</dimen>
+    <dimen name="min_size_thumbnail">100dp</dimen>
+    <!-- endregion-->
 </resources>

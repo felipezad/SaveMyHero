@@ -3,4 +3,6 @@
     <string name="title_home">Home</string>
     <string name="title_favorite">Favorite</string>
     <string name="title_hero">Hero</string>
+
+    <string name="hero_missing_data">This information about this hero is not available!</string>
 </resources>

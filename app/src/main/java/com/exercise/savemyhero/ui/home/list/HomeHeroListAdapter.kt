@@ -6,10 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.exercise.savemyhero.R
 import com.exercise.savemyhero.databinding.HomeHeroItemListBinding
 import com.exercise.savemyhero.domain.hero.Hero
 
-class HomeHeroListAdapter(private val onItemClickListener: OnItemClickListener) :
+class HomeHeroListAdapter(
+    private val onItemClickListener: OnItemClickListener,
+    private val requestManager: RequestManager
+) :
     ListAdapter<Hero, HomeHeroListAdapter.HomeHeroViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -30,7 +36,8 @@ class HomeHeroListAdapter(private val onItemClickListener: OnItemClickListener) 
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            requestManager = requestManager
         )
     }
 
@@ -42,16 +49,21 @@ class HomeHeroListAdapter(private val onItemClickListener: OnItemClickListener) 
         fun onItemClicked(hero: Hero, view: View)
     }
 
-    class HomeHeroViewHolder(private val binding: HomeHeroItemListBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
+    class HomeHeroViewHolder(
+        private val binding: HomeHeroItemListBinding,
+        private val requestManager: RequestManager
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(hero: Hero, onItemClickListener: HomeHeroListAdapter.OnItemClickListener? = null) {
+            val missingDataString = binding.root.context.getString(R.string.hero_missing_data)
             binding.homeHeroName.text = hero.name
-            //TODO (implement glide)
-//            binding.imageView.load(post.imageUrl) {
-//                placeholder(R.drawable.ic_photo)
-//                error(R.drawable.ic_broken_image)
-//            }
+            binding.homeHeroDescription.text =
+                if (hero.description.isNotEmpty()) hero.description else missingDataString
+            requestManager
+                .load(hero.thumbnail)
+                .placeholder(R.drawable.ic_superhero_placeholder)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(binding.homeHeroThumbnail)
+                .clearOnDetach()
 
             onItemClickListener?.let { listener ->
                 binding.root.setOnClickListener {

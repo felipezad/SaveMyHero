@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.RequestManager
 import com.exercise.savemyhero.databinding.FragmentHomeBinding
 import com.exercise.savemyhero.domain.hero.Hero
 import com.exercise.savemyhero.ui.core.BaseFragment
@@ -19,12 +20,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeHeroListAdapter.On
     @Inject
     lateinit var homeViewModelFactory: HomeViewModel.Factory
 
+    @Inject
+    lateinit var requestManagerGlide: RequestManager
+
     private val homeViewModel: HomeViewModel by viewModels {
         homeViewModelFactory
     }
 
     private val homeHeroListAdapter: HomeHeroListAdapter by lazy {
-        HomeHeroListAdapter(onItemClickListener = this)
+        HomeHeroListAdapter(onItemClickListener = this, requestManager = requestManagerGlide)
     }
 
     override fun onCreateView(
