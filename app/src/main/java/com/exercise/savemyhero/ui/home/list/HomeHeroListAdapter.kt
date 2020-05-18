@@ -3,6 +3,8 @@ package com.exercise.savemyhero.ui.home.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +13,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.exercise.savemyhero.R
 import com.exercise.savemyhero.databinding.HomeHeroItemListBinding
 import com.exercise.savemyhero.domain.hero.Hero
+import com.exercise.savemyhero.ui.core.BundleKey
 
 class HomeHeroListAdapter(
     private val onItemClickListener: OnItemClickListener,
@@ -65,10 +68,10 @@ class HomeHeroListAdapter(
                 .into(binding.homeHeroThumbnail)
                 .clearOnDetach()
 
-            onItemClickListener?.let { listener ->
-                binding.root.setOnClickListener {
-                    listener.onItemClicked(hero, binding.root)
-                }
+            binding.root.setOnClickListener {
+                val bundle = bundleOf(BundleKey.HERO_DETAIL.key to hero)
+                Navigation.findNavController(binding.root)
+                    .navigate(R.id.action_navigation_home_to_navigation_hero, bundle)
             }
         }
     }

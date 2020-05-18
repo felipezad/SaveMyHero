@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.exercise.savemyhero.R
+import com.exercise.savemyhero.domain.hero.Hero
+import com.exercise.savemyhero.ui.core.BundleKey
 
 class HeroFragment : Fragment() {
 
@@ -26,6 +28,8 @@ class HeroFragment : Fragment() {
         heroViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+
+        val hero = arguments?.getParcelable<Hero>(BundleKey.HERO_DETAIL.key)
         return root
     }
 }

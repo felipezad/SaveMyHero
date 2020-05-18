@@ -9,13 +9,24 @@
         android:id="@+id/navigation_home"
         android:name="com.exercise.savemyhero.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_hero"
+            app:destination="@id/navigation_hero"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_hero"
         android:name="com.exercise.savemyhero.ui.hero.HeroFragment"
         android:label="@string/title_hero"
-        tools:layout="@layout/fragment_hero" />
+        tools:layout="@layout/fragment_hero">
+        <argument
+            android:name="heroDetail"
+            app:argType="com.exercise.savemyhero.domain.hero.Hero" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_favorites"
