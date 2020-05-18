@@ -1,12 +1,13 @@
 package com.exercise.savemyhero.data.remote
 
+import com.exercise.savemyhero.BuildConfig
 import dagger.Module
 import dagger.Provides
 import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.math.BigInteger
 import java.security.MessageDigest
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -17,7 +18,7 @@ object NetworkModule {
     @JvmStatic
     fun provideRetrofit(okHttpClient: OkHttpClient): MarvelService {
         return Retrofit.Builder()
-            .baseUrl("https://gateway.marvel.com:443/v1/public/")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .client(okHttpClient)
             .build()
@@ -30,6 +31,8 @@ object NetworkModule {
     fun provideOkHttp(): OkHttpClient {
         return OkHttpClient()
             .newBuilder()
+            .connectTimeout(60L, TimeUnit.SECONDS)
+            .readTimeout(60L, TimeUnit.SECONDS)
             .addInterceptor(ApiInterceptor())
             .build()
     }
@@ -40,11 +43,10 @@ object NetworkModule {
             val request = chain.request()
             val urlBuilder = request.url().newBuilder()
 
-            val currentTime = System.currentTimeMillis().toString()
-            // TODO hide this in a better place
-            val privateApiKey = "d6d16713cfd2ba7aee39a6a5ed03fb2be1b3313c"
-            val publicApiKey = "4d61c99bc5708b7da816aa78e4cbb4d3"
-            val hash = currentTime + privateApiKey + publicApiKey
+            val currentTime = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()).toString()
+            val privateApiKey = BuildConfig.API_PRIVATE
+            val publicApiKey = BuildConfig.API_PUBLIC
+            val hash = generateHash(currentTime, privateApiKey, publicApiKey)
             val newUrl = urlBuilder
                 .addQueryParameter("apikey", publicApiKey)
                 .addQueryParameter("hash", hash)
@@ -60,9 +62,18 @@ object NetworkModule {
             return this.newBuilder().url(newUrl).build()
         }
 
-        private fun String.md5(): String {
+        private fun String.toMD5(): String {
             val md = MessageDigest.getInstance("MD5")
-            return BigInteger(1, md.digest(toByteArray())).toString(16).padStart(32, '0')
+            val digested = md.digest(toByteArray())
+            return digested.joinToString("") { String.format("%02x", it) }
+        }
+
+        private fun generateHash(
+            currentTime: String,
+            privateApiKey: String,
+            publicApiKey: String
+        ): String {
+            return (currentTime.toString() + privateApiKey + publicApiKey).toMD5()
         }
     }
 }
