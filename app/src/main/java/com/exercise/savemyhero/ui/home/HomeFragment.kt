@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.exercise.savemyhero.R
-import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.exercise.savemyhero.databinding.FragmentHomeBinding
+import com.exercise.savemyhero.ui.core.BaseFragment
 import javax.inject.Inject
 
-class HomeFragment : DaggerFragment() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModel.Factory
@@ -25,7 +24,7 @@ class HomeFragment : DaggerFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return mViewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,9 +34,13 @@ class HomeFragment : DaggerFragment() {
 
     private fun setupViewModel() {
         homeViewModel.text.observe(viewLifecycleOwner, Observer { t ->
-            text_home.text = t
+            mViewBinding.textHome.text = t
         })
 
         homeViewModel.getListOfHeroes()
+    }
+
+    override fun getViewBinding(): FragmentHomeBinding {
+        return FragmentHomeBinding.inflate(layoutInflater)
     }
 }
