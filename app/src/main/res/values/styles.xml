@@ -8,4 +8,10 @@
     <item name="colorAccent">@color/colorAccent</item>
   </style>
 
+    <style name="HomeRecyclerStyle">
+      <item name="android:clipToPadding">false</item>
+      <item name="android:scrollbars">vertical</item>
+      <item name="android:paddingTop">@dimen/dimen_4</item>
+    </style>
+
 </resources>
