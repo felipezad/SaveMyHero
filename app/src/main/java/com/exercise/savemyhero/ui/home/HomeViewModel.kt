@@ -7,6 +7,7 @@ import com.exercise.savemyhero.ui.core.ApiResult
 import com.exercise.savemyhero.ui.core.Failure
 import com.exercise.savemyhero.ui.core.Loading
 import com.exercise.savemyhero.ui.core.Success
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,13 +36,10 @@ class HomeViewModel @Inject constructor(
 
     fun getListOfHeroes() {
         viewModelScope.launch {
-                getHeroesListUseCase
+            getHeroesListUseCase
                 .execute()
-               // does not work
-                .collect()
-
+                .collect { it -> handleListOfHeroes(it) }
         }
-
     }
 
     class Factory @Inject constructor(
