@@ -15,8 +15,13 @@ class HomeViewModel @Inject constructor(
     private val getHeroesListUseCase: GetHeroesListUseCase
 ) : ViewModel() {
 
+    private val _heroList = MutableLiveData<List<Hero>>()
+
+    val heroList: LiveData<List<Hero>>
+        get() = _heroList
+
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is Home Hero Fragment"
     }
     val text: LiveData<String> = _text
 
@@ -24,6 +29,7 @@ class HomeViewModel @Inject constructor(
         when (result) {
             is Success -> {
                 _text.value = "Success ${result.data.size}"
+                _heroList.postValue(result.data)
             }
             is Failure -> {
                 _text.value = "Failure ${result.failure}"

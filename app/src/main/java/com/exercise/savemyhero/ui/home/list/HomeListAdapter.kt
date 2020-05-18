@@ -25,7 +25,7 @@ class HomeListAdapter(private val onItemClickListener: OnItemClickListener) :
     }
 
     interface OnItemClickListener {
-        fun onItemClicked(hero: Hero, imageView: View)
+        fun onItemClicked(hero: Hero, view: View)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeHeroViewHolder {
