@@ -1,6 +1,6 @@
 package com.exercise.savemyhero
 
-val HERO_RESPONSE_JSON_STRING = """
+const val HERO_RESPONSE_JSON_STRING = """
 {
   "code": 200,
   "status": "Ok",
