@@ -7,19 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.exercise.savemyhero.databinding.FragmentHomeBinding
 import com.exercise.savemyhero.domain.hero.Hero
 import com.exercise.savemyhero.ui.core.BaseFragment
-import com.exercise.savemyhero.ui.home.list.HomeListAdapter
+import com.exercise.savemyhero.ui.home.list.HomeHeroListAdapter
 import javax.inject.Inject
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeListAdapter.OnItemClickListener {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeHeroListAdapter.OnItemClickListener {
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModel.Factory
 
     private val homeViewModel: HomeViewModel by viewModels {
         homeViewModelFactory
+    }
+
+    private val homeHeroListAdapter: HomeHeroListAdapter by lazy {
+        HomeHeroListAdapter(onItemClickListener = this)
     }
 
     override fun onCreateView(
@@ -30,12 +35,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeListAdapter.OnItem
         return mViewBinding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupViewModel()
-    }
-
-    private fun setupViewModel() {
+    override fun setupViewModel() {
         homeViewModel.text.observe(viewLifecycleOwner, Observer { t ->
             mViewBinding.textHome.text = t
         })
@@ -44,8 +44,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeListAdapter.OnItem
             heroList.forEachIndexed { index, hero ->
                 Log.d("Hero", "$index -> $hero.id")
             }
+            homeHeroListAdapter.submitList(heroList)
         })
         homeViewModel.getListOfHeroes()
+    }
+
+    override fun setupView() {
+        mViewBinding.homeHeroRecyclerView.apply {
+            layoutManager = LinearLayoutManager(fragmentContext)
+            adapter = homeHeroListAdapter
+        }
     }
 
     override fun getViewBinding(): FragmentHomeBinding {
