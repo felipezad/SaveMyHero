@@ -1,6 +1,6 @@
 package com.exercise.savemyhero
 
-import android.content.Context
+import android.app.Application
 import com.exercise.savemyhero.data.remote.NetworkModule
 import com.exercise.savemyhero.ui.MainActivityModule
 import dagger.BindsInstance
@@ -15,6 +15,8 @@ interface SaveMyHeroApplicationComponent : AndroidInjector<SaveMyHeroApplication
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance context: Context): SaveMyHeroApplicationComponent
+        fun create(
+            @BindsInstance application: Application
+        ): SaveMyHeroApplicationComponent
     }
 }

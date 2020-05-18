@@ -1,5 +1,19 @@
 package com.exercise.savemyhero.domain.hero
 
-data class Hero(val name: String, val thumbnail: String) {
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.exercise.savemyhero.domain.hero.Hero.Companion.TABLE_NAME
 
+@Entity(tableName = TABLE_NAME)
+data class Hero(
+
+    @PrimaryKey
+    var id: Int? = 0,
+    var name: String = "",
+    var thumbnail: String = "",
+    var description: String = ""
+) {
+    companion object {
+        const val TABLE_NAME = "hero"
+    }
 }
