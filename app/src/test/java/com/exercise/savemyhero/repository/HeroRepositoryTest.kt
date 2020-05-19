@@ -43,9 +43,7 @@ class HeroRepositoryTest {
     @MockK
     lateinit var heroDao: HeroDao
 
-    lateinit var heroRepository: HeroRepository
-
-
+    private lateinit var heroRepository: HeroRepository
     private val heroOne = Hero(1, "hero1", "no thumb1")
     private val heroTwo = Hero(2, "hero2", "no thumb2")
     private val listOfHeroes = listOf(heroOne, heroTwo)
@@ -78,7 +76,7 @@ class HeroRepositoryTest {
                 coEvery { marvelService.requestHeroes(limit = 1) } returns it
                 coEvery { heroMapper.to(from = it.data.results) } returns listOfHeroes
 
-                heroRepository.getElementsFromDatabase(1).collect { states ->
+                heroRepository.getElementsFromApi(1).collect { states ->
                     response.add(states)
                 }
                 advanceTimeBy(1_000)
@@ -100,7 +98,7 @@ class HeroRepositoryTest {
             coEvery { marvelService.requestHeroes(limit = 1) } throws IOException()
             coEvery { heroMapper.to(from = heroMock?.data!!.results) }
 
-            heroRepository.getElementsFromDatabase(1).collect {
+            heroRepository.getElementsFromApi(1).collect {
                 response.add(it)
             }
             advanceTimeBy(1_000)
