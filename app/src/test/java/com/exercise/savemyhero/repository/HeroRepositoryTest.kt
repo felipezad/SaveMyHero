@@ -78,7 +78,7 @@ class HeroRepositoryTest {
                 coEvery { marvelService.requestHeroes(limit = 1) } returns it
                 coEvery { heroMapper.to(from = it.data.results) } returns listOfHeroes
 
-                heroRepository.getHeroesFromApi(1).collect { states ->
+                heroRepository.getElementsFromDatabase(1).collect { states ->
                     response.add(states)
                 }
                 advanceTimeBy(1_000)
@@ -100,7 +100,7 @@ class HeroRepositoryTest {
             coEvery { marvelService.requestHeroes(limit = 1) } throws IOException()
             coEvery { heroMapper.to(from = heroMock?.data!!.results) }
 
-            heroRepository.getHeroesFromApi(1).collect {
+            heroRepository.getElementsFromDatabase(1).collect {
                 response.add(it)
             }
             advanceTimeBy(1_000)

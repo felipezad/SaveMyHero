@@ -38,7 +38,6 @@ class FavoriteHeroListAdapter(
     }
 
     override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.bind(getItem(position), onFavoriteButtonClick)
     }
-
 }

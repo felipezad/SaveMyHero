@@ -1,14 +1,15 @@
 package com.exercise.savemyhero.domain
 
-import com.exercise.savemyhero.domain.hero.Hero
 import com.exercise.savemyhero.common.ActionResult
 import kotlinx.coroutines.flow.Flow
 
-interface Repository<in T> {
+interface Repository<T> {
 
-    suspend fun saveFavoriteHero(data: T): Flow<ActionResult<Boolean>>
+    suspend fun insertDataIntoRoom(data: T): Flow<ActionResult<Boolean>>
 
-    suspend fun getHeroesFromApi(numberOfHeroes: Int): Flow<ActionResult<List<Hero>>>
+    suspend fun getElementsFromApi(numberOfElements: Int): Flow<ActionResult<List<T>>>
 
-    suspend fun deleteFavoriteHero(data: T): Flow<ActionResult<Boolean>>
+    suspend fun deleteDataFromRoom(data: T): Flow<ActionResult<Boolean>>
+
+    suspend fun getElementsFromDatabase(): Flow<ActionResult<List<T>>>
 }

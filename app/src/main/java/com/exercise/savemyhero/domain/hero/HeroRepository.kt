@@ -1,14 +1,15 @@
 package com.exercise.savemyhero.domain.hero
 
-import com.exercise.savemyhero.data.local.HeroDao
-import com.exercise.savemyhero.data.remote.MarvelService
-import com.exercise.savemyhero.domain.Repository
-import com.exercise.savemyhero.common.prepareLoadingStates
 import com.exercise.savemyhero.common.ActionResult
 import com.exercise.savemyhero.common.Failure
 import com.exercise.savemyhero.common.Success
+import com.exercise.savemyhero.common.prepareLoadingStates
+import com.exercise.savemyhero.data.local.HeroDao
+import com.exercise.savemyhero.data.remote.MarvelService
+import com.exercise.savemyhero.domain.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import java.io.IOException
@@ -20,10 +21,23 @@ class HeroRepository @Inject constructor(
     private val heroDao: HeroDao
 ) : Repository<Hero> {
 
-    override suspend fun getHeroesFromApi(numberOfHeroes: Int): Flow<ActionResult<List<Hero>>> {
+    override suspend fun getElementsFromDatabase(): Flow<ActionResult<List<Hero>>> {
         return flow {
             try {
-                val latestHeroes = marvelService.requestHeroes(limit = numberOfHeroes)
+                val heroListFromDB = heroDao.getFavoriteHeroes().first()
+                emit(Success(heroListFromDB))
+            } catch (error: IOException) {
+                emit(Failure(error))
+            }
+        }
+            .prepareLoadingStates()
+            .flowOn(Dispatchers.IO)
+    }
+
+    override suspend fun getElementsFromApi(numberOfElements: Int): Flow<ActionResult<List<Hero>>> {
+        return flow {
+            try {
+                val latestHeroes = marvelService.requestHeroes(limit = numberOfElements)
                 val value = heroMapper.to(from = latestHeroes.data.results)
                 emit(Success(value))
             } catch (error: IOException) {
@@ -34,7 +48,7 @@ class HeroRepository @Inject constructor(
             .flowOn(Dispatchers.IO)
     }
 
-    override suspend fun saveFavoriteHero(data: Hero): Flow<ActionResult<Boolean>> {
+    override suspend fun insertDataIntoRoom(data: Hero): Flow<ActionResult<Boolean>> {
         return flow {
             try {
                 heroDao.insert(data)
@@ -47,7 +61,7 @@ class HeroRepository @Inject constructor(
             .flowOn(Dispatchers.IO)
     }
 
-    override suspend fun deleteFavoriteHero(data: Hero): Flow<ActionResult<Boolean>> {
+    override suspend fun deleteDataFromRoom(data: Hero): Flow<ActionResult<Boolean>> {
         return flow {
             try {
                 heroDao.delete(data)

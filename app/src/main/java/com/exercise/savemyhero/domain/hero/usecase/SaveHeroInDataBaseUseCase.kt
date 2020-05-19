@@ -17,7 +17,7 @@ class SaveHeroInDataBaseUseCase @Inject constructor(
 
     override fun execute(param: Hero): Flow<ActionResult<Boolean>> {
         return flow {
-            heroRepository.saveFavoriteHero(param).collect { it ->
+            heroRepository.insertDataIntoRoom(param).collect { it ->
                 emit(it)
             }
         }
