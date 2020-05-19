@@ -39,7 +39,6 @@
     <!--   region Hero Fragment-->
     <style name="heroImageStyle">
         <item name="android:scaleType">centerCrop</item>
-        <item name="android:height">@dimen/hero_image_size</item>
     </style>
 
     <style name="heroNameStyle">

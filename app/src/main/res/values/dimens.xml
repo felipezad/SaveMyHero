@@ -15,7 +15,8 @@
     <!-- endregion-->
 
     <!--    region Hero Fragment -->
-    <dimen name="hero_image_size">200dp</dimen>
+    <dimen name="hero_image_size_width">190dp</dimen>
+    <dimen name="hero_image_size_height">140dp</dimen>
     <dimen name="hero_name_size">20sp</dimen>
     <dimen name="hero_description_size">14sp</dimen>
     <!--    endregion-->
