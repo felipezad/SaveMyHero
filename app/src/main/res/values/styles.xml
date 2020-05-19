@@ -34,5 +34,25 @@
         <item name="android:textAlignment">viewStart</item>
         <item name="android:layout_marginTop">@dimen/dimen_4</item>
     </style>
+    <!--endregion -->
+
+    <!--   region Hero Fragment-->
+    <style name="heroImageStyle">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:height">@dimen/hero_image_size</item>
+    </style>
+
+    <style name="heroNameStyle">
+        <item name="android:textSize">@dimen/hero_name_size</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="heroDescriptionStyle">
+        <item name="android:textSize">@dimen/hero_description_size</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:maxLines">5</item>
+        <item name="android:ellipsize">end</item>
+    </style>
     <!--endregion-->
 </resources>

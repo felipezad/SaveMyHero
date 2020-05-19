@@ -9,8 +9,14 @@
     <dimen name="dimen_16">16dp</dimen>
     <!-- endregion -->
 
-    <!-- region Thumbnail -->
+    <!-- region Home Fragment -->
     <dimen name="max_size_thumbnail">100dp</dimen>
     <dimen name="min_size_thumbnail">100dp</dimen>
     <!-- endregion-->
+
+    <!--    region Hero Fragment -->
+    <dimen name="hero_image_size">500dp</dimen>
+    <dimen name="hero_name_size">20sp</dimen>
+    <dimen name="hero_description_size">14sp</dimen>
+    <!--    endregion-->
 </resources>
