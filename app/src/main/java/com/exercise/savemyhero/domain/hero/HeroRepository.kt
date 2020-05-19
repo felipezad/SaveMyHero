@@ -24,8 +24,8 @@ class HeroRepository @Inject constructor(
     override suspend fun getElementsFromDatabase(): Flow<ActionResult<List<Hero>>> {
         return flow {
             try {
-                val heroListFromDB = heroDao.getFavoriteHeroes().first()
-                emit(Success(heroListFromDB))
+                val listHeroes = heroDao.getFavoriteHeroes().first()
+                emit(Success(listHeroes))
             } catch (error: IOException) {
                 emit(Failure(error))
             }

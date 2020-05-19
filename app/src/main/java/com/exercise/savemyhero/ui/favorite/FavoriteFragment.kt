@@ -53,8 +53,7 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(), OnFavoriteButt
             }
             favoriteHeroListAdapter.submitList(heroList)
         })
-        if (favoriteViewModel.heroList.value == null)
-            favoriteViewModel.getListOfHeroes()
+        favoriteViewModel.getListOfHeroes()
     }
 
     override fun setupView() {
