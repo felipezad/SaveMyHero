@@ -11,8 +11,11 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.exercise.savemyhero.R
 import com.exercise.savemyhero.databinding.FragmentHeroBinding
 import com.exercise.savemyhero.domain.hero.Hero
+import com.exercise.savemyhero.domain.hero.imageUrl
 import com.exercise.savemyhero.ui.core.BaseFragment
 import com.exercise.savemyhero.ui.core.BundleKey
+import com.exercise.savemyhero.ui.core.ThumbnailOrientation.LANDSCAPE
+import com.exercise.savemyhero.ui.core.ThumbnailSize.LARGE
 import javax.inject.Inject
 
 class HeroFragment : BaseFragment<FragmentHeroBinding>() {
@@ -47,7 +50,7 @@ class HeroFragment : BaseFragment<FragmentHeroBinding>() {
             mViewBinding.heroName.text = it.name
             mViewBinding.heroDescription.text = it.description
             requestManagerGlide
-                .load(it?.thumbnail)
+                .load(it?.imageUrl(LANDSCAPE, LARGE))
                 .placeholder(R.drawable.ic_superhero_placeholder)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(mViewBinding.heroImage)

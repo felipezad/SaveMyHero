@@ -10,7 +10,8 @@ class HeroMapper @Inject constructor() : Mapper<HeroResponse, Hero> {
             Hero(
                 id = id,
                 name = name,
-                thumbnail = thumbnail.path + "." + thumbnail.extension,
+                thumbnail = thumbnail.path,
+                extension = thumbnail.extension,
                 description = description
             )
         }

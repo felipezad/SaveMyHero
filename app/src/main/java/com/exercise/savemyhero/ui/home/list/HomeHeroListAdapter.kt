@@ -13,7 +13,10 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.exercise.savemyhero.R
 import com.exercise.savemyhero.databinding.HomeHeroItemListBinding
 import com.exercise.savemyhero.domain.hero.Hero
+import com.exercise.savemyhero.domain.hero.imageUrl
 import com.exercise.savemyhero.ui.core.BundleKey
+import com.exercise.savemyhero.ui.core.ThumbnailOrientation.PORTRAIT
+import com.exercise.savemyhero.ui.core.ThumbnailSize.MEDIUM
 
 class HomeHeroListAdapter(
     private val onItemClickListener: OnItemClickListener,
@@ -62,7 +65,7 @@ class HomeHeroListAdapter(
             binding.homeHeroDescription.text =
                 if (hero.description.isNotEmpty()) hero.description else missingDataString
             requestManager
-                .load(hero.thumbnail)
+                .load(hero.imageUrl(PORTRAIT, MEDIUM))
                 .placeholder(R.drawable.ic_superhero_placeholder)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.homeHeroThumbnail)
