@@ -61,16 +61,11 @@ class HeroFragment : BaseFragment<FragmentHeroBinding>() {
     override fun setupView() {
         hero?.let {
             heroViewModel.displayHero(it)
-        } ?: run {
-            if (heroViewModel.hero.value == null) {
-                val noHeroSelected = Hero(-1, "No hero was selected", "", "")
-                heroViewModel.displayHero(noHeroSelected)
-            }
+            return
         }
-
-    }
-
-    private fun setupViewWithoutHero() {
-
+        if (heroViewModel.hero.value == null) {
+            val noHeroSelected = Hero(-1, "No hero was selected", "", "")
+            heroViewModel.displayHero(noHeroSelected)
+        }
     }
 }
