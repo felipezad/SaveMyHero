@@ -1,7 +1,7 @@
 package com.exercise.savemyhero.domain
 
 import com.exercise.savemyhero.domain.hero.Hero
-import com.exercise.savemyhero.ui.core.ActionResult
+import com.exercise.savemyhero.common.ActionResult
 import kotlinx.coroutines.flow.Flow
 
 interface Repository<in T> {

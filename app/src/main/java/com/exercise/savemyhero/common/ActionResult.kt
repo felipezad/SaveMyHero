@@ -1,4 +1,4 @@
-package com.exercise.savemyhero.ui.core
+package com.exercise.savemyhero.common
 
 sealed class ActionResult<out T : Any>
 data class Success<out T : Any>(val data: T) : ActionResult<T>()

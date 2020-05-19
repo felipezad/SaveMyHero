@@ -13,11 +13,11 @@ import com.exercise.savemyhero.R
 import com.exercise.savemyhero.databinding.FragmentHomeBinding
 import com.exercise.savemyhero.domain.hero.Hero
 import com.exercise.savemyhero.ui.core.BaseFragment
+import com.exercise.savemyhero.ui.core.OnFavoriteButtonClick
 import com.exercise.savemyhero.ui.home.list.HomeHeroListAdapter
 import javax.inject.Inject
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(),
-    HomeHeroListAdapter.OnFavoriteButtonClick {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnFavoriteButtonClick {
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModel.Factory

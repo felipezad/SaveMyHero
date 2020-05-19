@@ -1,7 +1,5 @@
-package com.exercise.savemyhero.extensions
+package com.exercise.savemyhero.common
 
-import com.exercise.savemyhero.ui.core.ActionResult
-import com.exercise.savemyhero.ui.core.Loading
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart

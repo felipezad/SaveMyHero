@@ -6,10 +6,10 @@ import com.exercise.savemyhero.domain.hero.Hero
 import com.exercise.savemyhero.domain.hero.usecase.DeleteHeroInDataBaseUseCase
 import com.exercise.savemyhero.domain.hero.usecase.GetHeroesListUseCase
 import com.exercise.savemyhero.domain.hero.usecase.SaveHeroInDataBaseUseCase
-import com.exercise.savemyhero.ui.core.ActionResult
-import com.exercise.savemyhero.ui.core.Failure
-import com.exercise.savemyhero.ui.core.Loading
-import com.exercise.savemyhero.ui.core.Success
+import com.exercise.savemyhero.common.ActionResult
+import com.exercise.savemyhero.common.Failure
+import com.exercise.savemyhero.common.Loading
+import com.exercise.savemyhero.common.Success
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject

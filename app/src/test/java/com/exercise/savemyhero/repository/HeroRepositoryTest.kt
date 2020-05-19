@@ -1,5 +1,9 @@
 package com.exercise.savemyhero.repository
 
+import com.exercise.savemyhero.common.ActionResult
+import com.exercise.savemyhero.common.Failure
+import com.exercise.savemyhero.common.Loading
+import com.exercise.savemyhero.common.Success
 import com.exercise.savemyhero.data.local.HeroDao
 import com.exercise.savemyhero.data.remote.MarvelService
 import com.exercise.savemyhero.data.remote.model.ApiResponse
@@ -8,10 +12,6 @@ import com.exercise.savemyhero.data.remote.model.HeroResponse
 import com.exercise.savemyhero.domain.hero.Hero
 import com.exercise.savemyhero.domain.hero.HeroMapper
 import com.exercise.savemyhero.domain.hero.HeroRepository
-import com.exercise.savemyhero.ui.core.ActionResult
-import com.exercise.savemyhero.ui.core.Failure
-import com.exercise.savemyhero.ui.core.Loading
-import com.exercise.savemyhero.ui.core.Success
 import com.squareup.moshi.Moshi
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -78,7 +78,7 @@ class HeroRepositoryTest {
                 coEvery { marvelService.requestHeroes(limit = 1) } returns it
                 coEvery { heroMapper.to(from = it.data.results) } returns listOfHeroes
 
-                heroRepository.getHeroes(1).collect { states ->
+                heroRepository.getHeroesFromApi(1).collect { states ->
                     response.add(states)
                 }
                 advanceTimeBy(1_000)
@@ -100,7 +100,7 @@ class HeroRepositoryTest {
             coEvery { marvelService.requestHeroes(limit = 1) } throws IOException()
             coEvery { heroMapper.to(from = heroMock?.data!!.results) }
 
-            heroRepository.getHeroes(1).collect {
+            heroRepository.getHeroesFromApi(1).collect {
                 response.add(it)
             }
             advanceTimeBy(1_000)

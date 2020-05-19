@@ -3,10 +3,10 @@ package com.exercise.savemyhero.domain.hero
 import com.exercise.savemyhero.data.local.HeroDao
 import com.exercise.savemyhero.data.remote.MarvelService
 import com.exercise.savemyhero.domain.Repository
-import com.exercise.savemyhero.extensions.prepareLoadingStates
-import com.exercise.savemyhero.ui.core.ActionResult
-import com.exercise.savemyhero.ui.core.Failure
-import com.exercise.savemyhero.ui.core.Success
+import com.exercise.savemyhero.common.prepareLoadingStates
+import com.exercise.savemyhero.common.ActionResult
+import com.exercise.savemyhero.common.Failure
+import com.exercise.savemyhero.common.Success
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

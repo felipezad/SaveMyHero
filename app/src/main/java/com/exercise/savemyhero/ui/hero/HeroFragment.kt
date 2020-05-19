@@ -64,7 +64,7 @@ class HeroFragment : BaseFragment<FragmentHeroBinding>() {
             return
         }
         if (heroViewModel.hero.value == null) {
-            val noHeroSelected = Hero(-1, "No hero was selected", "", "")
+            val noHeroSelected = Hero(-1, "No hero selected", "", "")
             heroViewModel.displayHero(noHeroSelected)
         }
     }
