@@ -14,14 +14,17 @@ class HeroViewHolder(
     private val binding: HeroItemListBinding,
     private val requestManager: RequestManager
 ) : RecyclerView.ViewHolder(binding.root) {
+
     fun bind(
         hero: Hero,
-        onFavoriteButtonClick: OnFavoriteButtonClick? = null
+        onFavoriteButtonClick: OnFavoriteButtonClick? = null,
+        isHeroFavorite: Boolean = true
     ) {
         val missingDataString = binding.root.context.getString(R.string.hero_missing_data)
         binding.homeHeroName.text = hero.name
         binding.homeHeroDescription.text =
             if (hero.description.isNotEmpty()) hero.description else missingDataString
+        binding.homeHeroFavoriteCheckBox.isChecked = isHeroFavorite
         requestManager
             .load(hero.imageUrl(ThumbnailOrientation.PORTRAIT, ThumbnailSize.MEDIUM))
             .placeholder(R.drawable.ic_superhero_placeholder)

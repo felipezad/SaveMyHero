@@ -11,6 +11,7 @@ import com.exercise.savemyhero.domain.hero.usecase.DeleteHeroInDataBaseUseCase
 import com.exercise.savemyhero.domain.hero.usecase.GetFavoritesHeroesListUseCase
 import com.exercise.savemyhero.domain.hero.usecase.SaveHeroInDataBaseUseCase
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -91,9 +92,17 @@ class FavoriteViewModel @Inject constructor(
         viewModelScope.launch {
             deleteHeroInDataBaseUseCase
                 .execute(hero)
+                .onCompletion { cause ->
+                    if (cause == null) {
+                        val newHeroList = _heroList.value?.toMutableList()
+                        newHeroList?.remove(hero)
+                        _heroList.postValue(newHeroList)
+                    }
+                }
                 .collect {
                     handleDeleteFavoriteHero(it)
                 }
+
         }
     }
 

@@ -39,6 +39,6 @@ class HomeHeroListAdapter(
     }
 
     override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
-        holder.bind(getItem(position), onFavoriteButtonClick)
+        holder.bind(getItem(position), onFavoriteButtonClick, false)
     }
 }
