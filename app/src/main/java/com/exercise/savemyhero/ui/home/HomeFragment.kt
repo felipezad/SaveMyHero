@@ -68,6 +68,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),
     }
 
     override fun onFavoriteClicked(hero: Hero, shouldSave: Boolean) {
-        homeViewModel.saveFavoriteHero(hero)
+        if (shouldSave)
+            homeViewModel.saveFavoriteHero(hero)
+        else
+            homeViewModel.deleteFavoriteHero(hero)
     }
 }

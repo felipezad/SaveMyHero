@@ -3,6 +3,7 @@ package com.exercise.savemyhero.ui.home
 import android.util.Log
 import androidx.lifecycle.*
 import com.exercise.savemyhero.domain.hero.Hero
+import com.exercise.savemyhero.domain.hero.usecase.DeleteHeroInDataBaseUseCase
 import com.exercise.savemyhero.domain.hero.usecase.GetHeroesListUseCase
 import com.exercise.savemyhero.domain.hero.usecase.SaveHeroInDataBaseUseCase
 import com.exercise.savemyhero.ui.core.ActionResult
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     private val getHeroesListUseCase: GetHeroesListUseCase,
-    private val saveHeroInDataBaseUseCase: SaveHeroInDataBaseUseCase
+    private val saveHeroInDataBaseUseCase: SaveHeroInDataBaseUseCase,
+    private val deleteHeroInDataBaseUseCase: DeleteHeroInDataBaseUseCase
 ) : ViewModel() {
 
     private val _heroList = MutableLiveData<List<Hero>>()
@@ -47,16 +49,32 @@ class HomeViewModel @Inject constructor(
     private fun handleSaveFavoriteHero(result: ActionResult<Boolean>) {
         when (result) {
             is Success -> {
-                Log.d("saving hero", result.data.toString())
+                Log.d("handle saving hero", result.data.toString())
             }
             is Failure -> {
-                Log.d("failure hero", result.failure.message.orEmpty())
+                Log.d("handle saving hero failing", result.failure.message.orEmpty())
             }
             is Loading -> {
-                Log.d("loading saving hero", result.isLoading.toString())
+                Log.d("handle saving hero loading", result.isLoading.toString())
             }
         }
     }
+
+
+    private fun handleDeleteFavoriteHero(result: ActionResult<Boolean>) {
+        when (result) {
+            is Success -> {
+                Log.d("handle delete hero", result.data.toString())
+            }
+            is Failure -> {
+                Log.d("handle delete hero failure", result.failure.message.orEmpty())
+            }
+            is Loading -> {
+                Log.d("handle delete hero loading", result.isLoading.toString())
+            }
+        }
+    }
+
 
     fun getListOfHeroes() {
         viewModelScope.launch {
@@ -76,19 +94,35 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun deleteFavoriteHero(hero: Hero) {
+        viewModelScope.launch {
+            deleteHeroInDataBaseUseCase
+                .execute(hero)
+                .collect {
+                    handleDeleteFavoriteHero(it)
+                }
+        }
+    }
+
 
     class Factory @Inject constructor(
         private val getHeroesListUseCase: GetHeroesListUseCase,
-        private val saveHeroInDataBaseUseCase: SaveHeroInDataBaseUseCase
+        private val saveHeroInDataBaseUseCase: SaveHeroInDataBaseUseCase,
+        private val deleteHeroInDataBaseUseCase: DeleteHeroInDataBaseUseCase
     ) : ViewModelProvider.Factory {
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             return modelClass
                 .getConstructor(
                     GetHeroesListUseCase::class.java,
-                    SaveHeroInDataBaseUseCase::class.java
+                    SaveHeroInDataBaseUseCase::class.java,
+                    DeleteHeroInDataBaseUseCase::class.java
                 )
-                .newInstance(getHeroesListUseCase, saveHeroInDataBaseUseCase)
+                .newInstance(
+                    getHeroesListUseCase,
+                    saveHeroInDataBaseUseCase,
+                    deleteHeroInDataBaseUseCase
+                )
         }
     }
 }

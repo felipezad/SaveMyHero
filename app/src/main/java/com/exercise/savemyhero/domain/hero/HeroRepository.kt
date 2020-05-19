@@ -18,9 +18,9 @@ class HeroRepository @Inject constructor(
     private val heroMapper: HeroMapper,
     private val marvelService: MarvelService,
     private val heroDao: HeroDao
-) : Repository<Hero, Boolean> {
+) : Repository<Hero> {
 
-    fun getHeroes(numberOfHeroes: Int): Flow<ActionResult<List<Hero>>> {
+    override suspend fun getHeroesFromApi(numberOfHeroes: Int): Flow<ActionResult<List<Hero>>> {
         return flow {
             try {
                 val latestHeroes = marvelService.requestHeroes(limit = numberOfHeroes)
@@ -34,7 +34,7 @@ class HeroRepository @Inject constructor(
             .flowOn(Dispatchers.IO)
     }
 
-    override suspend fun saveDataInDataBase(data: Hero): Flow<ActionResult<Boolean>> {
+    override suspend fun saveFavoriteHero(data: Hero): Flow<ActionResult<Boolean>> {
         return flow {
             try {
                 heroDao.insert(data)
@@ -47,4 +47,16 @@ class HeroRepository @Inject constructor(
             .flowOn(Dispatchers.IO)
     }
 
+    override suspend fun deleteFavoriteHero(data: Hero): Flow<ActionResult<Boolean>> {
+        return flow {
+            try {
+                heroDao.delete(data)
+                emit(Success(true))
+            } catch (e: Exception) {
+                emit(Failure(e))
+            }
+        }
+            .prepareLoadingStates()
+            .flowOn(Dispatchers.IO)
+    }
 }

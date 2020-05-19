@@ -11,9 +11,8 @@ object SaveMyHeroDatabaseModule {
     @Singleton
     @JvmStatic
     @Provides
-    fun provideDatabase(application: Application) = SaveMyHeroDatabase.getInstance(
-        application
-    )
+    fun provideDatabase(application: Application) =
+        SaveMyHeroDatabase.getInstance(application)
 
     @Singleton
     @JvmStatic

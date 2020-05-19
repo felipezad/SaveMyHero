@@ -1,5 +1,6 @@
 package com.exercise.savemyhero.ui.home
 
+import com.exercise.savemyhero.domain.hero.usecase.DeleteHeroInDataBaseUseCase
 import com.exercise.savemyhero.domain.hero.usecase.GetHeroesListUseCase
 import com.exercise.savemyhero.domain.hero.usecase.SaveHeroInDataBaseUseCase
 import dagger.Module
@@ -23,8 +24,13 @@ object HomeViewModelFactory {
     @JvmStatic
     fun provideHomeViewModelFactory(
         getHeroesListUseCase: GetHeroesListUseCase,
-        saveHeroInDataBaseUseCase: SaveHeroInDataBaseUseCase
+        saveHeroInDataBaseUseCase: SaveHeroInDataBaseUseCase,
+        deleteHeroInDataBaseUseCase: DeleteHeroInDataBaseUseCase
     ): HomeViewModel.Factory {
-        return HomeViewModel.Factory(getHeroesListUseCase, saveHeroInDataBaseUseCase)
+        return HomeViewModel.Factory(
+            getHeroesListUseCase,
+            saveHeroInDataBaseUseCase,
+            deleteHeroInDataBaseUseCase
+        )
     }
 }

@@ -18,7 +18,7 @@ class GetHeroesListUseCase @Inject constructor(
      */
     override fun execute(param: Int): Flow<ActionResult<List<Hero>>> {
         return flow {
-            val heroes = heroRepository.getHeroes(param)
+            val heroes = heroRepository.getHeroesFromApi(numberOfHeroes = param)
             heroes.collect { emit(it) }
         }
     }

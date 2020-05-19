@@ -9,15 +9,15 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class SaveHeroInDataBaseUseCase @Inject constructor(
+class DeleteHeroInDataBaseUseCase @Inject constructor(
     private val heroRepository: HeroRepository
 ) : UseCase<Hero, Boolean> {
     override val className: String
-        get() = SaveHeroInDataBaseUseCase::class.simpleName.orEmpty()
+        get() = DeleteHeroInDataBaseUseCase::class.simpleName.orEmpty()
 
     override fun execute(param: Hero): Flow<ActionResult<Boolean>> {
         return flow {
-            heroRepository.saveFavoriteHero(param).collect { it ->
+            heroRepository.deleteFavoriteHero(param).collect { it ->
                 emit(it)
             }
         }
