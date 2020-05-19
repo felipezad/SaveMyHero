@@ -44,8 +44,9 @@ class HeroViewHolder(
 
         binding.root.setOnClickListener {
             val bundle = bundleOf(BundleKey.HERO_DETAIL.key to hero)
-            Navigation.findNavController(binding.root)
-                .navigate(R.id.action_navigation_home_to_navigation_hero, bundle)
+            val action = if (isHeroFavorite) R.id.action_navigation_favorites_to_navigation_hero
+            else R.id.action_navigation_home_to_navigation_hero
+            Navigation.findNavController(binding.root).navigate(action, bundle)
         }
     }
 }

@@ -102,7 +102,6 @@ class FavoriteViewModel @Inject constructor(
                 .collect {
                     handleDeleteFavoriteHero(it)
                 }
-
         }
     }
 
