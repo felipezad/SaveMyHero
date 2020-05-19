@@ -5,10 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.RequestManager
+import com.exercise.savemyhero.R
 import com.exercise.savemyhero.databinding.FragmentHomeBinding
 import com.exercise.savemyhero.domain.hero.Hero
 import com.exercise.savemyhero.ui.core.BaseFragment
@@ -23,7 +24,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeHeroListAdapter.On
     @Inject
     lateinit var requestManagerGlide: RequestManager
 
-    private val homeViewModel: HomeViewModel by viewModels {
+    private val homeViewModel: HomeViewModel by navGraphViewModels(R.id.mobile_navigation) {
         homeViewModelFactory
     }
 
@@ -50,7 +51,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeHeroListAdapter.On
             }
             homeHeroListAdapter.submitList(heroList)
         })
-        homeViewModel.getListOfHeroes()
+        if (homeViewModel.heroList.value == null)
+            homeViewModel.getListOfHeroes()
     }
 
     override fun setupView() {

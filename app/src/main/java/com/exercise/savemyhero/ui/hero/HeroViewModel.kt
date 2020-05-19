@@ -4,15 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.exercise.savemyhero.domain.hero.Hero
 import javax.inject.Inject
 
 class HeroViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
-    }
-    val text: LiveData<String> = _text
+    private val _hero = MutableLiveData<Hero>()
+    val hero: LiveData<Hero>
+        get() = _hero
 
+    fun displayHero(hero: Hero) {
+        _hero.postValue(hero)
+    }
 
     class Factory @Inject constructor() : ViewModelProvider.Factory {
 
