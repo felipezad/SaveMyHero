@@ -1,7 +1,9 @@
-package com.exercise.savemyhero.domain.hero
+package com.exercise.savemyhero.domain.hero.usecase
 
 import com.exercise.savemyhero.domain.UseCase
-import com.exercise.savemyhero.ui.core.ApiResult
+import com.exercise.savemyhero.domain.hero.Hero
+import com.exercise.savemyhero.domain.hero.HeroRepository
+import com.exercise.savemyhero.ui.core.ActionResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -9,11 +11,14 @@ import javax.inject.Inject
 
 class GetHeroesListUseCase @Inject constructor(
     private val heroRepository: HeroRepository
-) : UseCase {
+) : UseCase<Int, List<Hero>> {
 
-    fun execute(numberOfHeroes: Int = 5): Flow<ApiResult<List<Hero>>> {
+    /**
+     * @param param number of heroes request to the API
+     */
+    override fun execute(param: Int): Flow<ActionResult<List<Hero>>> {
         return flow {
-            val heroes = heroRepository.getHeroes(numberOfHeroes)
+            val heroes = heroRepository.getHeroes(param)
             heroes.collect { emit(it) }
         }
     }

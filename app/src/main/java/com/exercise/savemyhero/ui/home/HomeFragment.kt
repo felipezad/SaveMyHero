@@ -16,7 +16,8 @@ import com.exercise.savemyhero.ui.core.BaseFragment
 import com.exercise.savemyhero.ui.home.list.HomeHeroListAdapter
 import javax.inject.Inject
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeHeroListAdapter.OnItemClickListener {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(),
+    HomeHeroListAdapter.OnFavoriteButtonClick {
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModel.Factory
@@ -29,7 +30,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeHeroListAdapter.On
     }
 
     private val homeHeroListAdapter: HomeHeroListAdapter by lazy {
-        HomeHeroListAdapter(onItemClickListener = this, requestManager = requestManagerGlide)
+        HomeHeroListAdapter(onFavoriteButtonClick = this, requestManager = requestManagerGlide)
     }
 
     override fun onCreateView(
@@ -66,7 +67,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), HomeHeroListAdapter.On
         return FragmentHomeBinding.inflate(layoutInflater)
     }
 
-    override fun onItemClicked(hero: Hero, view: View) {
-        TODO("Not yet implemented")
+    override fun onFavoriteClicked(hero: Hero, shouldSave: Boolean) {
+        homeViewModel.saveFavoriteHero(hero)
     }
 }

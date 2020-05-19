@@ -1,5 +1,6 @@
 package com.exercise.savemyhero.repository
 
+import com.exercise.savemyhero.data.local.HeroDao
 import com.exercise.savemyhero.data.remote.MarvelService
 import com.exercise.savemyhero.data.remote.model.ApiResponse
 import com.exercise.savemyhero.data.remote.model.ApiResponseJsonAdapter
@@ -7,7 +8,7 @@ import com.exercise.savemyhero.data.remote.model.HeroResponse
 import com.exercise.savemyhero.domain.hero.Hero
 import com.exercise.savemyhero.domain.hero.HeroMapper
 import com.exercise.savemyhero.domain.hero.HeroRepository
-import com.exercise.savemyhero.ui.core.ApiResult
+import com.exercise.savemyhero.ui.core.ActionResult
 import com.exercise.savemyhero.ui.core.Failure
 import com.exercise.savemyhero.ui.core.Loading
 import com.exercise.savemyhero.ui.core.Success
@@ -39,6 +40,9 @@ class HeroRepositoryTest {
     @MockK
     lateinit var heroMapper: HeroMapper
 
+    @MockK
+    lateinit var heroDao: HeroDao
+
     lateinit var heroRepository: HeroRepository
 
 
@@ -49,7 +53,7 @@ class HeroRepositoryTest {
     private val moshi = Moshi.Builder().build()
     private val apiResponse =
         ApiResponseJsonAdapter<HeroResponse>(moshi, arrayOf(HeroResponse::class.java))
-    private var response: MutableList<ApiResult<List<Hero>>> = mutableListOf()
+    private var response: MutableList<ActionResult<List<Hero>>> = mutableListOf()
 
     @Before
     fun setUp() {
@@ -57,7 +61,7 @@ class HeroRepositoryTest {
         heroMock = apiResponse.fromJson(HERO_RESPONSE_JSON_STRING)
         MockKAnnotations.init(this)
         Dispatchers.setMain(testDispatcher)
-        heroRepository = HeroRepository(heroMapper, marvelService)
+        heroRepository = HeroRepository(heroMapper, marvelService, heroDao)
         assertNotNull(heroRepository)
     }
 

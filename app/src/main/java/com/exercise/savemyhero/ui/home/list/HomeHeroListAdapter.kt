@@ -1,7 +1,6 @@
 package com.exercise.savemyhero.ui.home.list
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
@@ -19,7 +18,7 @@ import com.exercise.savemyhero.ui.core.ThumbnailOrientation.PORTRAIT
 import com.exercise.savemyhero.ui.core.ThumbnailSize.MEDIUM
 
 class HomeHeroListAdapter(
-    private val onItemClickListener: OnItemClickListener,
+    private val onFavoriteButtonClick: OnFavoriteButtonClick,
     private val requestManager: RequestManager
 ) :
     ListAdapter<Hero, HomeHeroListAdapter.HomeHeroViewHolder>(DIFF_CALLBACK) {
@@ -48,18 +47,21 @@ class HomeHeroListAdapter(
     }
 
     override fun onBindViewHolder(holder: HomeHeroViewHolder, position: Int) {
-        holder.bind(getItem(position), onItemClickListener)
+        holder.bind(getItem(position), onFavoriteButtonClick)
     }
 
-    interface OnItemClickListener {
-        fun onItemClicked(hero: Hero, view: View)
+    interface OnFavoriteButtonClick {
+        fun onFavoriteClicked(hero: Hero, shouldSave: Boolean)
     }
 
     class HomeHeroViewHolder(
         private val binding: HomeHeroItemListBinding,
         private val requestManager: RequestManager
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(hero: Hero, onItemClickListener: HomeHeroListAdapter.OnItemClickListener? = null) {
+        fun bind(
+            hero: Hero,
+            onFavoriteButtonClick: OnFavoriteButtonClick? = null
+        ) {
             val missingDataString = binding.root.context.getString(R.string.hero_missing_data)
             binding.homeHeroName.text = hero.name
             binding.homeHeroDescription.text =
@@ -70,6 +72,16 @@ class HomeHeroListAdapter(
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.homeHeroThumbnail)
                 .clearOnDetach()
+
+            onFavoriteButtonClick?.let { listener ->
+                binding.homeHeroFavoriteCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked)
+                        listener.onFavoriteClicked(hero, true)
+                    else
+                        listener.onFavoriteClicked(hero, false)
+
+                }
+            }
 
             binding.root.setOnClickListener {
                 val bundle = bundleOf(BundleKey.HERO_DETAIL.key to hero)

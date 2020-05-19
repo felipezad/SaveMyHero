@@ -1,9 +1,10 @@
 package com.exercise.savemyhero.domain.hero
 
+import com.exercise.savemyhero.data.local.HeroDao
 import com.exercise.savemyhero.data.remote.MarvelService
 import com.exercise.savemyhero.domain.Repository
 import com.exercise.savemyhero.extensions.prepareLoadingStates
-import com.exercise.savemyhero.ui.core.ApiResult
+import com.exercise.savemyhero.ui.core.ActionResult
 import com.exercise.savemyhero.ui.core.Failure
 import com.exercise.savemyhero.ui.core.Success
 import kotlinx.coroutines.Dispatchers
@@ -15,10 +16,11 @@ import javax.inject.Inject
 
 class HeroRepository @Inject constructor(
     private val heroMapper: HeroMapper,
-    private val marvelService: MarvelService
-) : Repository {
+    private val marvelService: MarvelService,
+    private val heroDao: HeroDao
+) : Repository<Hero, Boolean> {
 
-    fun getHeroes(numberOfHeroes: Int): Flow<ApiResult<List<Hero>>> {
+    fun getHeroes(numberOfHeroes: Int): Flow<ActionResult<List<Hero>>> {
         return flow {
             try {
                 val latestHeroes = marvelService.requestHeroes(limit = numberOfHeroes)
@@ -31,4 +33,18 @@ class HeroRepository @Inject constructor(
             .prepareLoadingStates()
             .flowOn(Dispatchers.IO)
     }
+
+    override suspend fun saveDataInDataBase(data: Hero): Flow<ActionResult<Boolean>> {
+        return flow {
+            try {
+                heroDao.insert(data)
+                emit(Success(true))
+            } catch (e: Exception) {
+                emit(Failure(e))
+            }
+        }
+            .prepareLoadingStates()
+            .flowOn(Dispatchers.IO)
+    }
+
 }

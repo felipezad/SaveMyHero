@@ -1,6 +1,7 @@
 package com.exercise.savemyhero.ui.home
 
-import com.exercise.savemyhero.domain.hero.GetHeroesListUseCase
+import com.exercise.savemyhero.domain.hero.usecase.GetHeroesListUseCase
+import com.exercise.savemyhero.domain.hero.usecase.SaveHeroInDataBaseUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -20,7 +21,10 @@ object HomeViewModelFactory {
     @Singleton
     @Provides
     @JvmStatic
-    fun provideHomeViewModelFactory(getHeroesListUseCase: GetHeroesListUseCase): HomeViewModel.Factory {
-        return HomeViewModel.Factory(getHeroesListUseCase)
+    fun provideHomeViewModelFactory(
+        getHeroesListUseCase: GetHeroesListUseCase,
+        saveHeroInDataBaseUseCase: SaveHeroInDataBaseUseCase
+    ): HomeViewModel.Factory {
+        return HomeViewModel.Factory(getHeroesListUseCase, saveHeroInDataBaseUseCase)
     }
 }

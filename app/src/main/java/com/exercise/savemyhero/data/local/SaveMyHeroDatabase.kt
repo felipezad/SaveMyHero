@@ -1,9 +1,15 @@
 package com.exercise.savemyhero.data.local
 
 import android.content.Context
+import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.exercise.savemyhero.domain.hero.Hero
 
+@Database(
+    entities = [Hero::class],
+    version = 1
+)
 abstract class SaveMyHeroDatabase : RoomDatabase() {
 
     abstract fun heroDao(): HeroDao

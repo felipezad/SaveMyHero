@@ -1,6 +1,7 @@
 package com.exercise.savemyhero
 
 import android.app.Application
+import com.exercise.savemyhero.data.local.SaveMyHeroDatabaseModule
 import com.exercise.savemyhero.data.remote.NetworkModule
 import com.exercise.savemyhero.ui.MainActivityModule
 import com.exercise.savemyhero.ui.core.UiModule
@@ -11,7 +12,13 @@ import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidInjectionModule::class, MainActivityModule::class, NetworkModule::class, UiModule::class])
+@Component(modules = [
+    AndroidInjectionModule::class,
+    MainActivityModule::class,
+    NetworkModule::class,
+    UiModule::class,
+    SaveMyHeroDatabaseModule::class
+])
 interface SaveMyHeroApplicationComponent : AndroidInjector<SaveMyHeroApplication> {
 
     @Component.Factory
