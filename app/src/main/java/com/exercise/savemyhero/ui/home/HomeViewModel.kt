@@ -2,14 +2,14 @@ package com.exercise.savemyhero.ui.home
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.exercise.savemyhero.domain.hero.Hero
-import com.exercise.savemyhero.domain.hero.usecase.DeleteHeroInDataBaseUseCase
-import com.exercise.savemyhero.domain.hero.usecase.GetHeroesListUseCase
-import com.exercise.savemyhero.domain.hero.usecase.SaveHeroInDataBaseUseCase
 import com.exercise.savemyhero.common.ActionResult
 import com.exercise.savemyhero.common.Failure
 import com.exercise.savemyhero.common.Loading
 import com.exercise.savemyhero.common.Success
+import com.exercise.savemyhero.domain.hero.Hero
+import com.exercise.savemyhero.domain.hero.usecase.DeleteHeroInDataBaseUseCase
+import com.exercise.savemyhero.domain.hero.usecase.GetHeroesListUseCase
+import com.exercise.savemyhero.domain.hero.usecase.SaveHeroInDataBaseUseCase
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,6 +20,7 @@ class HomeViewModel @Inject constructor(
     private val deleteHeroInDataBaseUseCase: DeleteHeroInDataBaseUseCase
 ) : ViewModel() {
 
+    private val heroCache = mutableSetOf<Hero>()
     private val _heroList = MutableLiveData<List<Hero>>()
 
     val heroList: LiveData<List<Hero>>
@@ -34,7 +35,8 @@ class HomeViewModel @Inject constructor(
         when (result) {
             is Success -> {
                 _text.value = "Success ${result.data.size}"
-                _heroList.postValue(result.data)
+                heroCache.addAll(result.data)
+                _heroList.postValue(heroCache.toList())
             }
             is Failure -> {
                 _text.value = "Failure ${result.failure}"
@@ -76,10 +78,10 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    fun getListOfHeroes() {
+    fun getListOfHeroes(numberOfHeroes: Int = 0) {
         viewModelScope.launch {
             getHeroesListUseCase
-                .execute(5)
+                .execute(numberOfHeroes)
                 .collect { it -> handleListOfHeroes(it) }
         }
     }

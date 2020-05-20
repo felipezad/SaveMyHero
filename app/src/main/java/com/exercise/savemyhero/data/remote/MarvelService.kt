@@ -8,5 +8,8 @@ import retrofit2.http.Query
 interface MarvelService {
 
     @GET("characters")
-    suspend fun requestHeroes(@Query("limit") limit: Int = 5): ApiResponse<HeroResponse>
+    suspend fun requestHeroes(
+        @Query("limit") limit: Int = 5,
+        @Query("offset") offset: Int = 0
+    ): ApiResponse<HeroResponse>
 }

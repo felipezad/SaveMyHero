@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.exercise.savemyhero.R
 import com.exercise.savemyhero.databinding.FragmentHomeBinding
 import com.exercise.savemyhero.domain.hero.Hero
 import com.exercise.savemyhero.ui.core.BaseFragment
+import com.exercise.savemyhero.ui.core.InfiniteRecyclerViewScrollListener
 import com.exercise.savemyhero.ui.core.OnFavoriteButtonClick
 import com.exercise.savemyhero.ui.home.list.HomeHeroListAdapter
 import javax.inject.Inject
@@ -60,6 +62,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnFavoriteButtonClick 
         mViewBinding.homeHeroRecyclerView.apply {
             layoutManager = LinearLayoutManager(fragmentContext)
             adapter = homeHeroListAdapter
+            addOnScrollListener(object :
+                InfiniteRecyclerViewScrollListener(this.layoutManager as LinearLayoutManager) {
+                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                    homeViewModel.getListOfHeroes(Companion.OFF_SET_TO_LOAD_MORE_HEROES_PER_PAGE * page)
+                }
+            })
         }
     }
 
@@ -72,5 +80,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnFavoriteButtonClick 
             homeViewModel.saveFavoriteHero(hero)
         else
             homeViewModel.deleteFavoriteHero(hero)
+    }
+
+    companion object {
+        private const val OFF_SET_TO_LOAD_MORE_HEROES_PER_PAGE = 5
     }
 }

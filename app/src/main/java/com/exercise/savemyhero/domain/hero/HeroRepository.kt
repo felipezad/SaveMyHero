@@ -37,7 +37,7 @@ class HeroRepository @Inject constructor(
     override suspend fun getElementsFromApi(numberOfElements: Int): Flow<ActionResult<List<Hero>>> {
         return flow {
             try {
-                val latestHeroes = marvelService.requestHeroes(limit = numberOfElements)
+                val latestHeroes = marvelService.requestHeroes(offset = numberOfElements)
                 val value = heroMapper.to(from = latestHeroes.data.results)
                 emit(Success(value))
             } catch (error: IOException) {
