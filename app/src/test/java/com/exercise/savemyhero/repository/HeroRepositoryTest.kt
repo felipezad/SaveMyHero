@@ -83,11 +83,11 @@ class HeroRepositoryTest {
                 coVerify(exactly = 1) {
                     marvelService.requestHeroes(limit = 1)
                     heroMapper.to(from = it.data.results)
-                    assertEquals(3, response.size)
-                    assert(response[0] is Loading)
-                    assert(response[1] is Success)
-                    assert(response[2] is Loading)
                 }
+                assertEquals(3, response.size)
+                assert(response[0] is Loading)
+                assert(response[1] is Success)
+                assert(response[2] is Loading)
             }
         }
     }
@@ -104,11 +104,11 @@ class HeroRepositoryTest {
             advanceTimeBy(1_000)
             coVerify(exactly = 1) {
                 marvelService.requestHeroes(limit = 1)
-                assertEquals(3, response.size)
-                assert(response[0] is Loading)
-                assert(response[1] is Failure)
-                assert(response[2] is Loading)
             }
+            assertEquals(3, response.size)
+            assert(response[0] is Loading)
+            assert(response[1] is Failure)
+            assert(response[2] is Loading)
         }
     }
 }
