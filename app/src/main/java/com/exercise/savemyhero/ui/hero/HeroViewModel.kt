@@ -16,9 +16,9 @@ class HeroViewModel @Inject constructor(
     private val saveHeroInDataBaseUseCase: SaveHeroInDataBaseUseCase
 ) : ViewModel() {
 
-    private val _hero = MutableLiveData<Hero>()
+    private val _hero = MutableLiveData<Hero?>()
 
-    val hero: LiveData<Hero>
+    val hero: LiveData<Hero?>
         get() = _hero
 
     private val _favoriteButtonResult = MutableLiveData<Boolean>()
@@ -26,7 +26,7 @@ class HeroViewModel @Inject constructor(
     val favoriteButtonResult: LiveData<Boolean>
         get() = _favoriteButtonResult
 
-    fun displayHero(hero: Hero) {
+    fun displayHero(hero: Hero?) {
         _hero.postValue(hero)
     }
 

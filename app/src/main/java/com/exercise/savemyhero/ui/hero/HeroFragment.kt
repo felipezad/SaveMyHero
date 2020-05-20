@@ -48,18 +48,19 @@ class HeroFragment : BaseFragment<FragmentHeroBinding>() {
 
     override fun setupViewModel() {
         heroViewModel.hero.observe(viewLifecycleOwner, Observer { observableHero ->
-            mViewBinding.heroName.text = observableHero.name
-            mViewBinding.heroDescription.text = observableHero.description
-
-            mViewBinding.heroFavoriteButton.setOnClickListener {
-                heroViewModel.saveFavoriteHero(observableHero)
+            observableHero?.let {
+                mViewBinding.heroName.text = observableHero.name
+                mViewBinding.heroDescription.text = observableHero.description
+                requestManagerGlide
+                    .load(observableHero.imageUrl(LANDSCAPE, LARGE))
+                    .placeholder(R.drawable.ic_superhero_placeholder)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(mViewBinding.heroImage)
+                    .clearOnDetach()
+                mViewBinding.heroFavoriteButton.setOnClickListener {
+                    heroViewModel.saveFavoriteHero(observableHero)
+                }
             }
-            requestManagerGlide
-                .load(observableHero?.imageUrl(LANDSCAPE, LARGE))
-                .placeholder(R.drawable.ic_superhero_placeholder)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(mViewBinding.heroImage)
-                .clearOnDetach()
         })
 
         heroViewModel.favoriteButtonResult.observe(
@@ -80,10 +81,6 @@ class HeroFragment : BaseFragment<FragmentHeroBinding>() {
         hero?.let {
             heroViewModel.displayHero(it)
             return
-        }
-        if (heroViewModel.hero.value == null) {
-            val noHeroSelected = Hero(-1, "No hero selected", "", "")
-            heroViewModel.displayHero(noHeroSelected)
         }
     }
 }
