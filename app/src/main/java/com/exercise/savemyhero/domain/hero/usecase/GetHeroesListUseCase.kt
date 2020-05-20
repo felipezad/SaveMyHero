@@ -1,7 +1,7 @@
 package com.exercise.savemyhero.domain.hero.usecase
 
 import com.exercise.savemyhero.common.ActionResult
-import com.exercise.savemyhero.domain.UseCase
+import com.exercise.savemyhero.domain.UseCaseConsumerProducer
 import com.exercise.savemyhero.domain.hero.Hero
 import com.exercise.savemyhero.domain.hero.HeroRepository
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class GetHeroesListUseCase @Inject constructor(
     private val heroRepository: HeroRepository
-) : UseCase<Int, List<Hero>> {
+) : UseCaseConsumerProducer<Int, List<Hero>> {
 
     /**
      * @param param number of heroes request to the API

@@ -1,6 +1,6 @@
 package com.exercise.savemyhero.domain.hero.usecase
 
-import com.exercise.savemyhero.domain.UseCase
+import com.exercise.savemyhero.domain.UseCaseConsumerProducer
 import com.exercise.savemyhero.domain.hero.Hero
 import com.exercise.savemyhero.domain.hero.HeroRepository
 import com.exercise.savemyhero.common.ActionResult
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class SaveHeroInDataBaseUseCase @Inject constructor(
     private val heroRepository: HeroRepository
-) : UseCase<Hero, Boolean> {
+) : UseCaseConsumerProducer<Hero, Boolean> {
     override val className: String
         get() = SaveHeroInDataBaseUseCase::class.simpleName.orEmpty()
 
