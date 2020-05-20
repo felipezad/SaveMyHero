@@ -1,5 +1,6 @@
 package com.exercise.savemyhero.ui.hero
 
+import com.exercise.savemyhero.domain.hero.usecase.SaveHeroInDataBaseUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
@@ -18,7 +19,11 @@ object HeroViewModelFactory {
     @Singleton
     @Provides
     @JvmStatic
-    fun provideHeroViewModelFactory(): HeroViewModel.Factory {
-        return HeroViewModel.Factory()
+    fun provideHeroViewModelFactory(
+        saveHeroInDataBaseUseCase: SaveHeroInDataBaseUseCase
+    ): HeroViewModel.Factory {
+        return HeroViewModel.Factory(
+            saveHeroInDataBaseUseCase
+        )
     }
 }

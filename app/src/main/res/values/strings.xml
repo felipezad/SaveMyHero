@@ -4,5 +4,7 @@
     <string name="title_favorite">Favorite</string>
     <string name="title_hero">Hero</string>
 
+    <!--    region Hero detail-->
     <string name="hero_missing_data">This information about this hero is not available!</string>
+    <string name="detail_save_favorite_hero_button">You saved your hero! Go to the Favorite section</string>
 </resources>

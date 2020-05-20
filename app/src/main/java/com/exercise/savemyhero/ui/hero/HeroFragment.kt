@@ -16,6 +16,7 @@ import com.exercise.savemyhero.ui.core.BaseFragment
 import com.exercise.savemyhero.ui.core.BundleKey
 import com.exercise.savemyhero.ui.core.ThumbnailOrientation.LANDSCAPE
 import com.exercise.savemyhero.ui.core.ThumbnailSize.LARGE
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 class HeroFragment : BaseFragment<FragmentHeroBinding>() {
@@ -46,16 +47,33 @@ class HeroFragment : BaseFragment<FragmentHeroBinding>() {
     }
 
     override fun setupViewModel() {
-        heroViewModel.hero.observe(viewLifecycleOwner, Observer {
-            mViewBinding.heroName.text = it.name
-            mViewBinding.heroDescription.text = it.description
+        heroViewModel.hero.observe(viewLifecycleOwner, Observer { observableHero ->
+            mViewBinding.heroName.text = observableHero.name
+            mViewBinding.heroDescription.text = observableHero.description
+
+            mViewBinding.heroFavoriteButton.setOnClickListener {
+                heroViewModel.saveFavoriteHero(observableHero)
+            }
             requestManagerGlide
-                .load(it?.imageUrl(LANDSCAPE, LARGE))
+                .load(observableHero?.imageUrl(LANDSCAPE, LARGE))
                 .placeholder(R.drawable.ic_superhero_placeholder)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(mViewBinding.heroImage)
                 .clearOnDetach()
         })
+
+        heroViewModel.favoriteButtonResult.observe(
+            viewLifecycleOwner, Observer { favoriteButton ->
+                if (favoriteButton) {
+                    val make = Snackbar.make(
+                        mViewBinding.root,
+                        getString(R.string.detail_save_favorite_hero_button),
+                        Snackbar.LENGTH_SHORT
+                    )
+                    make.animationMode = Snackbar.ANIMATION_MODE_FADE
+                    make.show()
+                }
+            })
     }
 
     override fun setupView() {
