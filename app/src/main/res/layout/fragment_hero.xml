@@ -2,8 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/heroContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:alpha="0.5"
+    android:background="@drawable/ic_superhero_placeholder"
     tools:context=".ui.hero.HeroFragment">
 
     <ImageView
@@ -12,7 +15,6 @@
         android:layout_width="@dimen/hero_image_size_width"
         android:layout_height="@dimen/hero_image_size_height"
         android:importantForAccessibility="no"
-        android:src="@drawable/ic_superhero_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,6 +34,7 @@
         style="@style/heroDescriptionStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:alpha="1.0"
         android:text="@string/select_a_hero_in_the_home_page_or_favorite_page"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,10 +46,12 @@
         android:id="@+id/heroFavoriteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:alpha="1.0"
         android:backgroundTint="@color/colorAccent"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_favorite_red_24dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

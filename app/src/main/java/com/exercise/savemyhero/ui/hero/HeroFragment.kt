@@ -51,14 +51,22 @@ class HeroFragment : BaseFragment<FragmentHeroBinding>() {
             observableHero?.let {
                 mViewBinding.heroName.text = observableHero.name
                 mViewBinding.heroDescription.text = observableHero.description
+                mViewBinding.heroImage.alpha = 1.0f
+                mViewBinding.heroContainer.apply {
+                    alpha = 1.0f
+                    background = null
+                }
                 requestManagerGlide
                     .load(observableHero.imageUrl(LANDSCAPE, LARGE))
                     .placeholder(R.drawable.ic_superhero_placeholder)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(mViewBinding.heroImage)
                     .clearOnDetach()
-                mViewBinding.heroFavoriteButton.setOnClickListener {
-                    heroViewModel.saveFavoriteHero(observableHero)
+                mViewBinding.heroFavoriteButton.apply {
+                    show()
+                    setOnClickListener {
+                        heroViewModel.saveFavoriteHero(observableHero)
+                    }
                 }
             }
         })

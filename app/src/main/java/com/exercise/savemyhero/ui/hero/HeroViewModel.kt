@@ -34,14 +34,14 @@ class HeroViewModel @Inject constructor(
         when (result) {
             is Success -> {
                 Log.d("handle saving hero", result.data.toString())
-                _favoriteButtonResult.postValue(true)
+                _favoriteButtonResult.value = true
             }
             is Failure -> {
                 Log.d("handle saving hero failing", result.failure.message.orEmpty())
-                _favoriteButtonResult.postValue(false)
+                _favoriteButtonResult.value = false
             }
             is Loading -> {
-                _favoriteButtonResult.postValue(false)
+                _favoriteButtonResult.value = false
             }
         }
     }
