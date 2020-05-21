@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
-import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.exercise.savemyhero.R
 import com.exercise.savemyhero.databinding.FragmentHeroBinding
@@ -17,19 +16,8 @@ import com.exercise.savemyhero.ui.core.BundleKey
 import com.exercise.savemyhero.ui.core.ThumbnailOrientation.LANDSCAPE
 import com.exercise.savemyhero.ui.core.ThumbnailSize.LARGE
 import com.google.android.material.snackbar.Snackbar
-import javax.inject.Inject
 
-class HeroFragment : BaseFragment<FragmentHeroBinding>() {
-
-    @Inject
-    lateinit var heroViewModelFactory: HeroViewModel.Factory
-
-    @Inject
-    lateinit var requestManagerGlide: RequestManager
-
-    private val heroViewModel: HeroViewModel by navGraphViewModels(R.id.mobile_navigation) {
-        heroViewModelFactory
-    }
+class HeroFragment : BaseFragment<HeroViewModel, FragmentHeroBinding>() {
 
     private var hero: Hero? = null
 
@@ -38,6 +26,8 @@ class HeroFragment : BaseFragment<FragmentHeroBinding>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        mViewModel =
+            navGraphViewModels<HeroViewModel>(R.navigation.mobile_navigation) { mViewModelFactory }.value
         hero = arguments?.getParcelable<Hero>(BundleKey.HERO_DETAIL.key)
         return mViewBinding.root
     }
@@ -47,7 +37,7 @@ class HeroFragment : BaseFragment<FragmentHeroBinding>() {
     }
 
     override fun setupViewModel() {
-        heroViewModel.hero.observe(viewLifecycleOwner, Observer { observableHero ->
+        mViewModel.hero.observe(viewLifecycleOwner, Observer { observableHero ->
             observableHero?.let {
                 mViewBinding.heroName.text = observableHero.name
                 mViewBinding.heroDescription.text = observableHero.description
@@ -65,13 +55,13 @@ class HeroFragment : BaseFragment<FragmentHeroBinding>() {
                 mViewBinding.heroFavoriteButton.apply {
                     show()
                     setOnClickListener {
-                        heroViewModel.saveFavoriteHero(observableHero)
+                        mViewModel.saveFavoriteHero(observableHero)
                     }
                 }
             }
         })
 
-        heroViewModel.favoriteButtonResult.observe(
+        mViewModel.favoriteButtonResult.observe(
             viewLifecycleOwner, Observer { favoriteButton ->
                 if (favoriteButton) {
                     val make = Snackbar.make(
@@ -87,7 +77,7 @@ class HeroFragment : BaseFragment<FragmentHeroBinding>() {
 
     override fun setupView() {
         hero?.let {
-            heroViewModel.displayHero(it)
+            mViewModel.displayHero(it)
             return
         }
     }

@@ -97,26 +97,4 @@ class HomeViewModel @Inject constructor(
                 }
         }
     }
-
-
-    class Factory @Inject constructor(
-        private val getHeroesListUseCase: GetHeroesListUseCase,
-        private val saveHeroInDataBaseUseCase: SaveHeroInDataBaseUseCase,
-        private val deleteHeroInDataBaseUseCase: DeleteHeroInDataBaseUseCase
-    ) : ViewModelProvider.Factory {
-
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass
-                .getConstructor(
-                    GetHeroesListUseCase::class.java,
-                    SaveHeroInDataBaseUseCase::class.java,
-                    DeleteHeroInDataBaseUseCase::class.java
-                )
-                .newInstance(
-                    getHeroesListUseCase,
-                    saveHeroInDataBaseUseCase,
-                    deleteHeroInDataBaseUseCase
-                )
-        }
-    }
 }

@@ -1,5 +1,6 @@
 package com.exercise.savemyhero.common.di.ui
 
+import androidx.lifecycle.ViewModel
 import com.exercise.savemyhero.common.di.module.ViewModelKey
 import com.exercise.savemyhero.common.di.module.ViewModelProviderFactory
 import com.exercise.savemyhero.ui.favorite.FavoriteFragment
@@ -23,7 +24,7 @@ abstract class FragmentBuilderModule {
     @Binds
     @IntoMap
     @ViewModelKey(HomeViewModel::class)
-    abstract fun bindHomeViewModel(viewModel: HomeViewModel)
+    abstract fun bindHomeViewModel(viewModel: HomeViewModel): ViewModel
 
     //endregion
 
@@ -34,7 +35,7 @@ abstract class FragmentBuilderModule {
     @Binds
     @IntoMap
     @ViewModelKey(HeroViewModel::class)
-    abstract fun bindHeroViewModel(viewModel: HeroViewModel)
+    abstract fun bindHeroViewModel(viewModel: HeroViewModel): ViewModel
     // endregion
 
     //region Favorite Fragment
@@ -44,6 +45,6 @@ abstract class FragmentBuilderModule {
     @Binds
     @IntoMap
     @ViewModelKey(FavoriteViewModel::class)
-    abstract fun bindFavoriteViewModel(viewModel: FavoriteViewModel)
+    abstract fun bindFavoriteViewModel(viewModel: FavoriteViewModel): ViewModel
     //endregion
 }

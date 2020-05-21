@@ -7,6 +7,7 @@ import dagger.MapKey
 import dagger.Module
 import javax.inject.Inject
 import javax.inject.Provider
+import javax.inject.Singleton
 import kotlin.reflect.KClass
 
 class SaveMyHeroViewModelFactory @Inject constructor(
@@ -37,13 +38,13 @@ class SaveMyHeroViewModelFactory @Inject constructor(
 @Module
 internal abstract class ViewModelProviderFactory {
     @Binds
-    internal abstract fun bindViewModelFactory(
-        factory: SaveMyHeroViewModelFactory
-    ): ViewModelProvider.Factory
+     abstract fun bindViewModelFactory(factory: SaveMyHeroViewModelFactory): ViewModelProvider.Factory
 }
 
 @Target(
-    AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER
+    AnnotationTarget.FUNCTION,
+    AnnotationTarget.PROPERTY_GETTER,
+    AnnotationTarget.PROPERTY_SETTER
 )
 @Retention(AnnotationRetention.RUNTIME)
 @MapKey

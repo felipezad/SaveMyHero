@@ -8,37 +8,27 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.RequestManager
 import com.exercise.savemyhero.R
 import com.exercise.savemyhero.databinding.FragmentFavoriteBinding
 import com.exercise.savemyhero.domain.hero.Hero
 import com.exercise.savemyhero.ui.core.BaseFragment
 import com.exercise.savemyhero.ui.core.OnFavoriteButtonClick
 import com.exercise.savemyhero.ui.favorite.list.FavoriteHeroListAdapter
-import javax.inject.Inject
 
-class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(), OnFavoriteButtonClick {
-
-    @Inject
-    lateinit var favoriteViewModelFactory: FavoriteViewModel.Factory
-
-    @Inject
-    lateinit var requestManagerGlide: RequestManager
-
-    private val favoriteViewModel: FavoriteViewModel by navGraphViewModels(R.id.mobile_navigation) {
-        favoriteViewModelFactory
-    }
+class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding>(),
+    OnFavoriteButtonClick {
 
     private val favoriteHeroListAdapter: FavoriteHeroListAdapter by lazy {
         FavoriteHeroListAdapter(onFavoriteButtonClick = this, requestManager = requestManagerGlide)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        mViewModel =
+            navGraphViewModels<FavoriteViewModel>(R.navigation.mobile_navigation) { mViewModelFactory }.value
         return mViewBinding.root
     }
 
@@ -47,13 +37,13 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(), OnFavoriteButt
     }
 
     override fun setupViewModel() {
-        favoriteViewModel.heroList.observe(viewLifecycleOwner, Observer { heroList ->
+        mViewModel.heroList.observe(viewLifecycleOwner, Observer { heroList ->
             heroList.forEachIndexed { index, hero ->
                 Log.d("Hero", "$index -> $hero.id")
             }
             favoriteHeroListAdapter.submitList(heroList)
         })
-        favoriteViewModel.getListOfHeroes()
+        mViewModel.getListOfHeroes()
     }
 
     override fun setupView() {
@@ -65,8 +55,8 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding>(), OnFavoriteButt
 
     override fun onFavoriteClicked(hero: Hero, shouldSave: Boolean) {
         if (shouldSave)
-            favoriteViewModel.saveFavoriteHero(hero)
+            mViewModel.saveFavoriteHero(hero)
         else
-            favoriteViewModel.deleteFavoriteHero(hero)
+            mViewModel.deleteFavoriteHero(hero)
     }
 }

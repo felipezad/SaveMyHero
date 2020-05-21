@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.RequestManager
 import com.exercise.savemyhero.R
 import com.exercise.savemyhero.databinding.FragmentHomeBinding
 import com.exercise.savemyhero.domain.hero.Hero
@@ -19,19 +18,8 @@ import com.exercise.savemyhero.ui.core.InfiniteRecyclerViewScrollListener
 import com.exercise.savemyhero.ui.core.OnFavoriteButtonClick
 import com.exercise.savemyhero.ui.home.list.HomeHeroListAdapter
 import com.google.android.material.snackbar.Snackbar
-import javax.inject.Inject
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnFavoriteButtonClick {
-
-    @Inject
-    lateinit var homeViewModelFactory: HomeViewModel.Factory
-
-    @Inject
-    lateinit var requestManagerGlide: RequestManager
-
-    private val homeViewModel: HomeViewModel by navGraphViewModels(R.id.mobile_navigation) {
-        homeViewModelFactory
-    }
+class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), OnFavoriteButtonClick {
 
     private val homeHeroListAdapter: HomeHeroListAdapter by lazy {
         HomeHeroListAdapter(onFavoriteButtonClick = this, requestManager = requestManagerGlide)
@@ -46,7 +34,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnFavoriteButtonClick 
     }
 
     override fun setupViewModel() {
-        homeViewModel.heroList.observe(viewLifecycleOwner, Observer { heroList ->
+        mViewModel.heroList.observe(viewLifecycleOwner, Observer { heroList ->
             heroList.forEachIndexed { index, hero ->
                 Log.d("Hero", "$index -> $hero.id")
             }
@@ -67,24 +55,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnFavoriteButtonClick 
             }
 
         })
-        if (homeViewModel.heroList.value.isNullOrEmpty())
-            homeViewModel.getListOfHeroes()
+        if (mViewModel.heroList.value.isNullOrEmpty())
+            mViewModel.getListOfHeroes()
     }
 
     override fun setupView() {
+        mViewModel =
+            navGraphViewModels<HomeViewModel>(R.navigation.mobile_navigation) { mViewModelFactory }.value
         mViewBinding.homeHeroRecyclerView.apply {
             layoutManager = LinearLayoutManager(fragmentContext)
             adapter = homeHeroListAdapter
             addOnScrollListener(object :
                 InfiniteRecyclerViewScrollListener(this.layoutManager as LinearLayoutManager) {
                 override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                    homeViewModel.getListOfHeroes(Companion.OFF_SET_TO_LOAD_MORE_HEROES_PER_PAGE * page)
+                    mViewModel.getListOfHeroes(Companion.OFF_SET_TO_LOAD_MORE_HEROES_PER_PAGE * page)
                 }
             })
         }
 
         mViewBinding.fabRetryLoadingHeroes.setOnClickListener {
-            homeViewModel.getListOfHeroes()
+            mViewModel.getListOfHeroes()
         }
     }
 
@@ -94,9 +84,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnFavoriteButtonClick 
 
     override fun onFavoriteClicked(hero: Hero, shouldSave: Boolean) {
         if (shouldSave)
-            homeViewModel.saveFavoriteHero(hero)
+            mViewModel.saveFavoriteHero(hero)
         else
-            homeViewModel.deleteFavoriteHero(hero)
+            mViewModel.deleteFavoriteHero(hero)
     }
 
     companion object {
