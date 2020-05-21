@@ -1,6 +1,8 @@
 package com.exercise.savemyhero.ui.home
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -65,6 +67,16 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), OnFavor
         mViewBinding.fabRetryLoadingHeroes.setOnClickListener {
             mViewModel.getListOfHeroes()
         }
+
+        mViewBinding.searchHero.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                mViewModel.filterHeroByName(s.toString())
+            }
+        })
     }
 
     override fun getViewBinding(): FragmentHomeBinding {

@@ -1,7 +1,10 @@
 package com.exercise.savemyhero.ui.home
 
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.exercise.savemyhero.common.ActionResult
 import com.exercise.savemyhero.common.Failure
 import com.exercise.savemyhero.common.Loading
@@ -21,6 +24,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val heroCache = mutableSetOf<Hero>()
+    private val filteredHeroCache = mutableSetOf<Hero>()
     private val _heroList = MutableLiveData<List<Hero>>()
 
     val heroList: LiveData<List<Hero>>
@@ -95,6 +99,17 @@ class HomeViewModel @Inject constructor(
                 .collect {
                     handleDeleteFavoriteHero(it)
                 }
+        }
+    }
+
+    fun filterHeroByName(heroName: String) {
+        val filteredHeroes = heroCache.filter { hero ->
+            hero.name.contains(Regex(heroName, RegexOption.IGNORE_CASE))
+        }
+        if (filteredHeroes.isEmpty()) {
+            _heroList.postValue(heroCache.toList())
+        } else {
+            _heroList.postValue(filteredHeroes)
         }
     }
 }
