@@ -30,6 +30,8 @@ class HomeViewModel @Inject constructor(
     val heroList: LiveData<List<Hero>>
         get() = _heroList
 
+    var latestSearch: String = ""
+
 
     private fun handleListOfHeroes(result: ActionResult<List<Hero>>) {
         when (result) {
@@ -111,5 +113,6 @@ class HomeViewModel @Inject constructor(
         } else {
             _heroList.postValue(filteredHeroes)
         }
+        latestSearch = heroName
     }
 }

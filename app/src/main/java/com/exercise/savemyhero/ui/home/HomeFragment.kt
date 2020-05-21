@@ -68,15 +68,18 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), OnFavor
             mViewModel.getListOfHeroes()
         }
 
-        mViewBinding.searchHero.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
+        mViewBinding.searchHero.apply {
+            addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {}
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(s: CharSequence?, st: Int, c: Int, a: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                mViewModel.filterHeroByName(s.toString())
-            }
-        })
+                override fun onTextChanged(s: CharSequence?, st: Int, bf: Int, ct: Int) {
+                    mViewModel.filterHeroByName(s.toString())
+                }
+            })
+            setText(mViewModel.latestSearch)
+        }
     }
 
     override fun getViewBinding(): FragmentHomeBinding {
