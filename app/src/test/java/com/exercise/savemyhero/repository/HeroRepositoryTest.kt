@@ -73,7 +73,7 @@ class HeroRepositoryTest {
     fun `Repository only request once api service with successful response`() {
         runBlockingTest {
             heroMock?.let {
-                coEvery { marvelService.requestHeroes(limit = 1) } returns it
+                coEvery { marvelService.requestHeroes(offset = 1) } returns it
                 coEvery { heroMapper.to(from = it.data.results) } returns listOfHeroes
 
                 heroRepository.getElementsFromApi(1).collect { states ->
@@ -81,7 +81,7 @@ class HeroRepositoryTest {
                 }
                 advanceTimeBy(1_000)
                 coVerify(exactly = 1) {
-                    marvelService.requestHeroes(limit = 1)
+                    marvelService.requestHeroes(offset = 1)
                     heroMapper.to(from = it.data.results)
                 }
                 assertEquals(3, response.size)
@@ -95,7 +95,7 @@ class HeroRepositoryTest {
     @Test
     fun `Repository only request once api service with network failure`() {
         runBlockingTest {
-            coEvery { marvelService.requestHeroes(limit = 1) } throws IOException()
+            coEvery { marvelService.requestHeroes(offset = 1) } throws IOException()
             coEvery { heroMapper.to(from = heroMock?.data!!.results) }
 
             heroRepository.getElementsFromApi(1).collect {
@@ -103,7 +103,7 @@ class HeroRepositoryTest {
             }
             advanceTimeBy(1_000)
             coVerify(exactly = 1) {
-                marvelService.requestHeroes(limit = 1)
+                marvelService.requestHeroes(offset = 1)
             }
             assertEquals(3, response.size)
             assert(response[0] is Loading)
