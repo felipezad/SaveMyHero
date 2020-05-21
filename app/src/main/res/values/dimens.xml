@@ -19,5 +19,6 @@
     <dimen name="hero_image_size_height">140dp</dimen>
     <dimen name="hero_name_size">40sp</dimen>
     <dimen name="hero_description_size">28sp</dimen>
+    <dimen name="hero_look_hint_size">14sp</dimen>
     <!--    endregion-->
 </resources>
