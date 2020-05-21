@@ -11,6 +11,7 @@
     <string name="select_a_hero_in_the_home_page_or_favorite_page">Select a hero in the Home page or Favorite page</string>
     <string name="wifi_connected">WiFi connected</string>
     <string name="lost_connection">Internet connection lost</string>
+    <string name="input_your_hero_name">Input your hero name</string>
     <!--    endregion-->
 
 </resources>

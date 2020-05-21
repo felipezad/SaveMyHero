@@ -17,23 +17,26 @@ abstract class InfiniteRecyclerViewScrollListener(private val layoutManager: Lin
         val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
         val totalItemCount = layoutManager.itemCount
 
-        if (totalItemCount < previousTotalItemCount) {
-            this.currentPage = this.startingPageIndex
-            this.previousTotalItemCount = totalItemCount
-            if (totalItemCount == 0) {
-                this.loading = true
+        when {
+            totalItemCount < previousTotalItemCount -> {
+                this.currentPage = this.startingPageIndex
+                this.previousTotalItemCount = totalItemCount
+                if (totalItemCount == 0) {
+                    this.loading = true
+                }
             }
-        }
-
-        if (loading && totalItemCount > previousTotalItemCount) {
-            loading = false
-            previousTotalItemCount = totalItemCount
-        }
-
-        if (!loading && lastVisibleItemPosition + visibleThreshold > totalItemCount) {
-            currentPage++
-            onLoadMore(currentPage, totalItemCount, view)
-            loading = true
+            loading && totalItemCount > previousTotalItemCount -> {
+                loading = false
+                previousTotalItemCount = totalItemCount
+            }
+            !loading && lastVisibleItemPosition + visibleThreshold > totalItemCount -> {
+                currentPage++
+                onLoadMore(currentPage, totalItemCount, view)
+                loading = true
+            }
+            else -> {
+                loading = false
+            }
         }
     }
 

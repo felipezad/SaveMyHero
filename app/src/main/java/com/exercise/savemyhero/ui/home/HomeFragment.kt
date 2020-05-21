@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +16,6 @@ import com.exercise.savemyhero.ui.core.BaseFragment
 import com.exercise.savemyhero.ui.core.InfiniteRecyclerViewScrollListener
 import com.exercise.savemyhero.ui.core.OnFavoriteButtonClick
 import com.exercise.savemyhero.ui.home.list.HomeHeroListAdapter
-import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), OnFavoriteButtonClick {
 
@@ -40,21 +38,19 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), OnFavor
             heroList.forEachIndexed { index, hero ->
                 Log.d("Hero", "$index -> $hero.id")
             }
-            if (heroList.isEmpty()) {
-                mViewBinding.layoutInternetProblemContainer.isVisible = true
-                mViewBinding.homeHeroRecyclerView.isVisible = false
-            } else {
-                mViewBinding.homeHeroRecyclerView.isVisible = true
-                mViewBinding.layoutInternetProblemContainer.isVisible = false
+            if (heroList.isNotEmpty()) {
                 homeHeroListAdapter.submitList(heroList)
+                changeToHeroesLayout(mViewBinding.viewSwitcherHomeScreen.displayedChild)
+            } else {
+                mViewBinding.viewSwitcherHomeScreen.displayedChild = VILLAIN_LAYOUT_INTERNET_PROBLEM
             }
-
         })
         if (mViewModel.heroList.value.isNullOrEmpty())
             mViewModel.getListOfHeroes()
     }
 
     override fun setupView() {
+
         mViewBinding.homeHeroRecyclerView.apply {
             layoutManager = LinearLayoutManager(fragmentContext)
             adapter = homeHeroListAdapter
@@ -82,7 +78,15 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), OnFavor
             mViewModel.deleteFavoriteHero(hero)
     }
 
+    private fun changeToHeroesLayout(childDisplayed: Int) {
+        if (childDisplayed == VILLAIN_LAYOUT_INTERNET_PROBLEM) {
+            mViewBinding.viewSwitcherHomeScreen.displayedChild = HERO_LAYOUT_INTERNET_SUCCESS
+        }
+    }
+
     companion object {
         private const val OFF_SET_TO_LOAD_MORE_HEROES_PER_PAGE = 5
+        private const val VILLAIN_LAYOUT_INTERNET_PROBLEM = 0
+        private const val HERO_LAYOUT_INTERNET_SUCCESS = 1
     }
 }
