@@ -18,6 +18,8 @@ import com.exercise.savemyhero.ui.favorite.list.FavoriteHeroListAdapter
 class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding>(),
     OnFavoriteButtonClick {
 
+    override val mViewModel: FavoriteViewModel by navGraphViewModels(R.navigation.mobile_navigation) { mViewModelFactory }
+
     private val favoriteHeroListAdapter: FavoriteHeroListAdapter by lazy {
         FavoriteHeroListAdapter(onFavoriteButtonClick = this, requestManager = requestManagerGlide)
     }
@@ -27,8 +29,6 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mViewModel =
-            navGraphViewModels<FavoriteViewModel>(R.navigation.mobile_navigation) { mViewModelFactory }.value
         return mViewBinding.root
     }
 

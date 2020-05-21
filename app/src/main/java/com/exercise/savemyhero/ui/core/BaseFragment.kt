@@ -21,7 +21,7 @@ abstract class BaseFragment<VM : ViewModel, VB : ViewBinding> : DaggerFragment()
 
     protected lateinit var mViewBinding: VB
 
-    protected lateinit var mViewModel: VM
+    protected abstract val mViewModel: VM
 
     protected var fragmentContext: Context? = null
 

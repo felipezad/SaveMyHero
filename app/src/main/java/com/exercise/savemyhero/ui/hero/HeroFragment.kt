@@ -19,6 +19,8 @@ import com.google.android.material.snackbar.Snackbar
 
 class HeroFragment : BaseFragment<HeroViewModel, FragmentHeroBinding>() {
 
+    override val mViewModel: HeroViewModel by navGraphViewModels(R.navigation.mobile_navigation) { mViewModelFactory }
+
     private var hero: Hero? = null
 
     override fun onCreateView(
@@ -26,8 +28,6 @@ class HeroFragment : BaseFragment<HeroViewModel, FragmentHeroBinding>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mViewModel =
-            navGraphViewModels<HeroViewModel>(R.navigation.mobile_navigation) { mViewModelFactory }.value
         hero = arguments?.getParcelable<Hero>(BundleKey.HERO_DETAIL.key)
         return mViewBinding.root
     }

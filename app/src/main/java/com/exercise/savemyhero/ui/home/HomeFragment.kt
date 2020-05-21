@@ -21,6 +21,8 @@ import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), OnFavoriteButtonClick {
 
+    override val mViewModel: HomeViewModel by navGraphViewModels(R.navigation.mobile_navigation) { mViewModelFactory }
+
     private val homeHeroListAdapter: HomeHeroListAdapter by lazy {
         HomeHeroListAdapter(onFavoriteButtonClick = this, requestManager = requestManagerGlide)
     }
@@ -60,8 +62,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), OnFavor
     }
 
     override fun setupView() {
-        mViewModel =
-            navGraphViewModels<HomeViewModel>(R.navigation.mobile_navigation) { mViewModelFactory }.value
         mViewBinding.homeHeroRecyclerView.apply {
             layoutManager = LinearLayoutManager(fragmentContext)
             adapter = homeHeroListAdapter
