@@ -1,6 +1,7 @@
-package com.exercise.savemyhero.data.local
+package com.exercise.savemyhero.common.di.module
 
 import android.app.Application
+import com.exercise.savemyhero.data.local.SaveMyHeroDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -12,7 +13,9 @@ object SaveMyHeroDatabaseModule {
     @JvmStatic
     @Provides
     fun provideDatabase(application: Application) =
-        SaveMyHeroDatabase.getInstance(application)
+        SaveMyHeroDatabase.getInstance(
+            application
+        )
 
     @Singleton
     @JvmStatic

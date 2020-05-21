@@ -1,4 +1,4 @@
-package com.exercise.savemyhero.ui.core
+package com.exercise.savemyhero.common.di.module
 
 import android.app.Application
 import com.bumptech.glide.Glide
@@ -7,10 +7,11 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-object UiModule {
+object ApplicationModule {
 
     @Singleton
     @Provides
     @JvmStatic
     fun provideRequestManagerGlide(application: Application) = Glide.with(application)
 }
+

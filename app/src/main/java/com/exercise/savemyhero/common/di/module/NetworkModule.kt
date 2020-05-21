@@ -1,6 +1,7 @@
-package com.exercise.savemyhero.data.remote
+package com.exercise.savemyhero.common.di.module
 
 import com.exercise.savemyhero.BuildConfig
+import com.exercise.savemyhero.data.remote.MarvelService
 import dagger.Module
 import dagger.Provides
 import okhttp3.*

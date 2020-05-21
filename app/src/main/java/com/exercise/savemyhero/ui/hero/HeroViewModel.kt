@@ -55,19 +55,4 @@ class HeroViewModel @Inject constructor(
                 }
         }
     }
-
-    class Factory @Inject constructor(
-        private val saveHeroInDataBaseUseCase: SaveHeroInDataBaseUseCase
-    ) : ViewModelProvider.Factory {
-
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return modelClass
-                .getConstructor(
-                    SaveHeroInDataBaseUseCase::class.java
-                )
-                .newInstance(
-                    saveHeroInDataBaseUseCase
-                )
-        }
-    }
 }
