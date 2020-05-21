@@ -21,7 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), OnFavoriteButtonClick {
 
-    override val mViewModel: HomeViewModel by navGraphViewModels(R.navigation.mobile_navigation) { mViewModelFactory }
+    override val mViewModel: HomeViewModel by navGraphViewModels(R.id.mobile_navigation) { mViewModelFactory }
 
     private val homeHeroListAdapter: HomeHeroListAdapter by lazy {
         HomeHeroListAdapter(onFavoriteButtonClick = this, requestManager = requestManagerGlide)

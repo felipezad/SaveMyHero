@@ -19,7 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class HeroFragment : BaseFragment<HeroViewModel, FragmentHeroBinding>() {
 
-    override val mViewModel: HeroViewModel by navGraphViewModels(R.navigation.mobile_navigation) { mViewModelFactory }
+    override val mViewModel: HeroViewModel by navGraphViewModels(R.id.mobile_navigation) { mViewModelFactory }
 
     private var hero: Hero? = null
 
