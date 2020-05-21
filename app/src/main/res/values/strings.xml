@@ -9,4 +9,8 @@
     <string name="detail_save_favorite_hero_button">You saved your hero! Go to the Favorite section</string>
     <string name="no_hero_selected">No hero selected</string>
     <string name="select_a_hero_in_the_home_page_or_favorite_page">Select a hero in the Home page or Favorite page</string>
+    <string name="wifi_connected">WiFi connected</string>
+    <string name="lost_connection">Internet connection lost</string>
+    <!--    endregion-->
+
 </resources>

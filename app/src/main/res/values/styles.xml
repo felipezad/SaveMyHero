@@ -59,4 +59,18 @@
         <item name="android:layout_marginTop">@dimen/dimen_16</item>
     </style>
     <!--endregion-->
+
+    <!--    region Villain Problem -->
+    <style name="villainImageStyle">
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="fabTryButton">
+        <item name="android:backgroundTint">@color/colorPrimaryDark</item>
+        <item name="android:src">@android:drawable/stat_notify_sync</item>
+        <item name="android:tint">@android:color/white</item>
+    </style>
+
+
+    <!--    endregion-->
 </resources>

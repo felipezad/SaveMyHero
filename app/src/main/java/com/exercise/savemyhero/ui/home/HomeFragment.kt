@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import com.exercise.savemyhero.ui.core.BaseFragment
 import com.exercise.savemyhero.ui.core.InfiniteRecyclerViewScrollListener
 import com.exercise.savemyhero.ui.core.OnFavoriteButtonClick
 import com.exercise.savemyhero.ui.home.list.HomeHeroListAdapter
+import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnFavoriteButtonClick {
@@ -44,17 +46,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnFavoriteButtonClick 
     }
 
     override fun setupViewModel() {
-        homeViewModel.text.observe(viewLifecycleOwner, Observer { t ->
-            mViewBinding.textHome.text = t
-        })
-
         homeViewModel.heroList.observe(viewLifecycleOwner, Observer { heroList ->
             heroList.forEachIndexed { index, hero ->
                 Log.d("Hero", "$index -> $hero.id")
             }
-            homeHeroListAdapter.submitList(heroList)
+            val make = Snackbar.make(
+                mViewBinding.root,
+                getString(R.string.detail_save_favorite_hero_button),
+                Snackbar.LENGTH_SHORT
+            )
+            make.animationMode = Snackbar.ANIMATION_MODE_FADE
+            make.show()
+            if (heroList.isEmpty()) {
+                mViewBinding.layoutInternetProblemContainer.isVisible = true
+                mViewBinding.homeHeroRecyclerView.isVisible = false
+            } else {
+                mViewBinding.homeHeroRecyclerView.isVisible = true
+                mViewBinding.layoutInternetProblemContainer.isVisible = false
+                homeHeroListAdapter.submitList(heroList)
+            }
+
         })
-        if (homeViewModel.heroList.value == null)
+        if (homeViewModel.heroList.value.isNullOrEmpty())
             homeViewModel.getListOfHeroes()
     }
 
@@ -68,6 +81,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnFavoriteButtonClick 
                     homeViewModel.getListOfHeroes(Companion.OFF_SET_TO_LOAD_MORE_HEROES_PER_PAGE * page)
                 }
             })
+        }
+
+        mViewBinding.fabRetryLoadingHeroes.setOnClickListener {
+            homeViewModel.getListOfHeroes()
         }
     }
 

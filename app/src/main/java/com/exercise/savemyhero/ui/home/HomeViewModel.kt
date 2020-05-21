@@ -26,24 +26,16 @@ class HomeViewModel @Inject constructor(
     val heroList: LiveData<List<Hero>>
         get() = _heroList
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is Home Hero Fragment"
-    }
-    val text: LiveData<String> = _text
 
     private fun handleListOfHeroes(result: ActionResult<List<Hero>>) {
         when (result) {
             is Success -> {
-                _text.value = "Success ${result.data.size}"
                 heroCache.addAll(result.data)
                 _heroList.postValue(heroCache.toList())
             }
             is Failure -> {
-                _text.value = "Failure ${result.failure}"
-            }
-            is Loading -> {
-                if (result.isLoading)
-                    _text.value = "Loading ...."
+                heroCache.clear()
+                _heroList.postValue(heroCache.toList())
             }
         }
     }
