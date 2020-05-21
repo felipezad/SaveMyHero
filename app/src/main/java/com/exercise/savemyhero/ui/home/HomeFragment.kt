@@ -40,13 +40,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), OnFavor
             heroList.forEachIndexed { index, hero ->
                 Log.d("Hero", "$index -> $hero.id")
             }
-            val make = Snackbar.make(
-                mViewBinding.root,
-                getString(R.string.detail_save_favorite_hero_button),
-                Snackbar.LENGTH_SHORT
-            )
-            make.animationMode = Snackbar.ANIMATION_MODE_FADE
-            make.show()
             if (heroList.isEmpty()) {
                 mViewBinding.layoutInternetProblemContainer.isVisible = true
                 mViewBinding.homeHeroRecyclerView.isVisible = false
