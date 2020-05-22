@@ -24,6 +24,8 @@ It simply loads heroes data from an API and stores it in persistence storage. Fa
 - [Moshi](https://github.com/square/moshi) - A modern JSON library for Kotlin and Java.
 - [Moshi Converter](https://github.com/square/retrofit/tree/master/retrofit-converters/moshi) - A Converter which uses Moshi for serialization to and from JSON.
 - [Glide](https://bumptech.github.io/glide/) - An image loading library for Android.
+- [MocKK](https://mockk.io/) - A kotlin library for Android unit test.
+- [Espresso](https://developer.android.com/training/testing/espresso) - Espresso to write concise, beautiful, and reliable Android UI tests.
 
 ## Package Structure
 
