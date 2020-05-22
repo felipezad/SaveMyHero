@@ -1,4 +1,4 @@
-# Save My Hero 
+# Save My Hero
 
 **SaveMyHero** is a sample app Android application 📱 built to demonstrate use of Modern Android development tools️. 
 
@@ -71,4 +71,11 @@ It simply loads heroes data from an API and stores it in persistence storage. Fa
 This app uses [***MVVM and Clean Architecture***](https://developer.android.com/jetpack/docs/guide#recommended-app-arch) architecture.
 
 ![](https://miro.medium.com/max/1200/1*XxYlayLVyJ7SkwrqOTt10w.png)
+
+## Feature demo
+![](media/device-2020-05-22-171501.png)
+![](media/device-2020-05-22-171631.png)
+![](media/device-2020-05-22-171654.png)
+![](media/device-2020-05-22-171714.png)
+![](media/device-2020-05-22-171726.png)
 
