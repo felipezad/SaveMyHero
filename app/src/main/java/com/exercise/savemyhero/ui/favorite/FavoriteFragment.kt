@@ -41,7 +41,12 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
             heroList.forEachIndexed { index, hero ->
                 Log.d("Hero", "$index -> $hero.id")
             }
-            favoriteHeroListAdapter.submitList(heroList)
+            if (heroList.isNotEmpty()) {
+                favoriteHeroListAdapter.submitList(heroList)
+                changeToHeroesLayout(mViewBinding.viewSwitcherHomeScreen.displayedChild)
+            } else {
+                mViewBinding.viewSwitcherHomeScreen.displayedChild = HERO_LAYOUT_DATABASE_EMPTY
+            }
         })
         mViewModel.getListOfHeroes()
     }
@@ -58,5 +63,16 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
             mViewModel.saveFavoriteHero(hero)
         else
             mViewModel.deleteFavoriteHero(hero)
+    }
+
+    private fun changeToHeroesLayout(displayedChild: Int) {
+        if (displayedChild == HERO_LAYOUT_DATABASE_EMPTY) {
+            mViewBinding.viewSwitcherHomeScreen.displayedChild = HERO_LAYOUT_DATABASE_SUCCESS
+        }
+    }
+
+    companion object {
+        private const val HERO_LAYOUT_DATABASE_EMPTY = 0
+        private const val HERO_LAYOUT_DATABASE_SUCCESS = 1
     }
 }
