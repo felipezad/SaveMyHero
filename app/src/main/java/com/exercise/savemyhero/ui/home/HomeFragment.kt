@@ -52,7 +52,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), OnFavor
     }
 
     override fun setupView() {
-
         mViewBinding.homeHeroRecyclerView.apply {
             layoutManager = LinearLayoutManager(fragmentContext)
             adapter = homeHeroListAdapter
@@ -66,6 +65,7 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>(), OnFavor
 
         mViewBinding.fabRetryLoadingHeroes.setOnClickListener {
             mViewModel.getListOfHeroes()
+            mViewBinding.searchHero.setText("")
         }
 
         mViewBinding.searchHero.apply {
