@@ -1,5 +1,6 @@
 package com.exercise.savemyhero.navigation
 
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -32,17 +33,15 @@ class HomeHeroFragmentTest {
         navController = TestNavHostController(ApplicationProvider.getApplicationContext())
         navController.setViewModelStore(ViewModelStore())
         navController.setGraph(R.navigation.mobile_navigation)
-        homeScenario = launchFragmentInContainer<HomeFragment>() {
+        homeScenario = launchFragmentInContainer<HomeFragment>(Bundle(), R.style.AppTheme) {
             HomeFragment().also { fragment ->
                 fragment.viewLifecycleOwnerLiveData.observeForever { viewLifecycleOwner ->
                     if (viewLifecycleOwner != null) {
-                        // The fragment’s view has just been created
                         Navigation.setViewNavController(fragment.requireView(), navController)
                     }
                 }
             }
         }
-
         homeScenario.onFragment { fragment ->
             Navigation.setViewNavController(fragment.requireView(), navController)
         }
