@@ -12,6 +12,8 @@
     <!-- region Home Fragment -->
     <dimen name="max_size_thumbnail">100dp</dimen>
     <dimen name="min_size_thumbnail">100dp</dimen>
+
+    <dimen name="max_size_width_landscape">200dp</dimen>
     <!-- endregion-->
 
     <!--    region Hero Fragment -->
@@ -19,6 +21,6 @@
     <dimen name="hero_image_size_height">140dp</dimen>
     <dimen name="hero_name_size">40sp</dimen>
     <dimen name="hero_description_size">28sp</dimen>
-    <dimen name="hero_look_hint_size">14sp</dimen>
+    <dimen name="hero_look_hint_size">28sp</dimen>
     <!--    endregion-->
 </resources>

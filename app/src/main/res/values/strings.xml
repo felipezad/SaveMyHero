@@ -12,7 +12,7 @@
     <string name="wifi_connected">WiFi connected</string>
     <string name="lost_connection">Internet connection lost</string>
     <string name="input_your_hero_name">Input your hero name</string>
-    <string name="look_for_heroes">Look for heroes</string>
+    <string name="look_for_heroes">A villain appeared, please try searching for our heroes again</string>
     <!--    endregion-->
 
 </resources>
