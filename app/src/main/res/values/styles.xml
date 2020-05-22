@@ -54,7 +54,7 @@
         <item name="android:textSize">@dimen/hero_description_size</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:maxLines">5</item>
+        <item name="android:maxLines">10</item>
         <item name="android:ellipsize">end</item>
         <item name="android:layout_marginTop">@dimen/dimen_16</item>
     </style>
